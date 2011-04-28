@@ -1,4 +1,5 @@
 #include<cassert>
+#include<array>
 #include<sscrisk/cel/cel.hpp>
 #include<sscrisk/cel/cel.hpp>
 
@@ -21,7 +22,8 @@ int main()
  static constexpr int b[] = {0, 1};
  static constexpr int c[] = {0, 1, 2};
  static constexpr int d[] = {0, 1, 2, 3};
- 
+
+ // begin and end
  {
   constexpr auto beg = begin(a);
   constexpr auto ed = end(a);
@@ -74,5 +76,21 @@ int main()
   assert(testc);
   constexpr bool testd = none_of(d, is_greater_than_2);
   assert(!testd);
+ }
+
+ // find
+ {
+  // empty
+  constexpr int const * test = find(d, d, 0);
+  assert(test == d);
+  constexpr int const * test1 = find(d, end(d), 0);
+  assert(*test1 == 0);
+  constexpr int const * test2 = find(d, end(d), 3);
+  assert(*test2 == 3);
+  constexpr int const * test3 = find(d, end(d), 100);
+  assert(test3 == end(d));
+  // constexpr auto test4 = ::sscrisk::cel::range::find2(d, 3);
+  // assert(test4.end() - test4.begin() == 4);
+  
  }
 }
