@@ -129,8 +129,19 @@ namespace sscrisk{ namespace cel{
   }
   
   template<class InputIterator, class Predicate>
-  InputIterator find_if_not(InputIterator first, InputIterator last,
-                            Predicate pred);
+  constexpr InputIterator find_if_not(InputIterator first, InputIterator last, Predicate pred)
+  {
+   return first == last ? last : !pred(*first) ? first : find_if_not(first + 1, last, pred);
+  }
+
+  template<class Range, class Predicate>
+  constexpr range_container<
+   typename array_to_const_ptr<Range>::type
+  >
+  find_if_not(Range const & range, Predicate pred)
+  {
+   return {find_if_not(begin(range), end(range), pred), end(range)};
+  }
 }}
 
 #endif

@@ -129,8 +129,8 @@ int main()
 
  // find_if
  {
-  constexpr auto test = find_if(a, a, is_greater_than_2);
-  assert(test == a);
+  constexpr auto iter = find_if(a, a, is_greater_than_2);
+  assert(iter == a);
   {
    constexpr auto range = find_if(a, is_greater_than_2);
    constexpr auto first = range.begin(), last = range.end();
@@ -154,6 +154,38 @@ int main()
    constexpr auto first = range.begin(), last = range.end();
    constexpr auto diff = last - first;
    assert(diff == 1);
+   assert(*first > 2);
+  }
+ }
+
+ // find_if_not
+ {
+  constexpr auto iter = find_if_not(a, a, is_less_than_3);
+  assert(iter == a);
+  {
+   constexpr auto range = find_if_not(a, is_less_than_3);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 0);
+  }
+  {
+   constexpr auto range = find_if_not(b, is_less_than_3);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 0);
+  }
+  {
+   constexpr auto range = find_if_not(c, is_less_than_3);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 0);
+  }
+  {
+   constexpr auto range = find_if_not(d, is_less_than_3);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 1);
+   assert(!(*first < 3));
   }
  }
 }
