@@ -1,7 +1,37 @@
 #include<cassert>
 #include<array>
+#include<iostream>
 #include<sscrisk/cel/cel.hpp>
-#include<sscrisk/cel/cel.hpp>
+
+// for name demangling.
+#include<cstdlib>
+#include <cxxabi.h>
+class Demangle
+{
+private :
+    char * realname ;
+
+public :
+    Demangle( std::type_info const & ti )
+    {
+        int status = 0 ;
+        realname = abi::__cxa_demangle( ti.name(), 0, 0, &status ) ;
+    }
+
+    Demangle( Demangle const & ) = delete ;
+    Demangle & operator = ( Demangle const & ) = delete ;
+
+    ~Demangle()
+    {
+        std::free( realname ) ;
+    }
+
+    operator char const * () const
+    {
+        return realname ;
+    }
+
+} ;
 
 constexpr bool is_less_than_3(int n)
 {
@@ -83,14 +113,17 @@ int main()
   // empty
   constexpr int const * test = find(d, d, 0);
   assert(test == d);
+  // not empty
   constexpr int const * test1 = find(d, end(d), 0);
   assert(*test1 == 0);
   constexpr int const * test2 = find(d, end(d), 3);
   assert(*test2 == 3);
   constexpr int const * test3 = find(d, end(d), 100);
   assert(test3 == end(d));
-  // constexpr auto test4 = ::sscrisk::cel::range::find2(d, 3);
-  // assert(test4.end() - test4.begin() == 4);
-  
+  constexpr auto test4 = find(d, 3);
+  constexpr auto test5 = test4.end();
+  constexpr auto test6 = test4.begin();
+  constexpr auto test7 = test5 - test6;
+  assert(test7 == 1);
  }
 }

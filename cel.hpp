@@ -96,18 +96,17 @@ namespace sscrisk{ namespace cel{
    return first == last ? last : *first == value ? first : find(first + 1, last, value);
   }
   
-  namespace range{
-   template<class Range, class T>
-   constexpr range_container<
-    typename std::iterator_traits<
-     typename std::decay<Range>::type
-    >::const_iterator
-   >
-  find2(Range const & range, T const & value)
+  template<class Range, class T>
+  constexpr range_container<
+   typename std::decay<
+    typename std::add_const<Range>::type
+   >::type
+  >
+  find(Range const & range, T const & value)
   {
    return {find(begin(range), end(range), value), end(range)};
   }
-  }
+
   template<class InputIterator, class Predicate>
   InputIterator find_if(InputIterator first, InputIterator last,
                         Predicate pred);
