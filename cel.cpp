@@ -126,4 +126,34 @@ int main()
   constexpr auto test7 = test5 - test6;
   assert(test7 == 1);
  }
+
+ // find_if
+ {
+  constexpr auto test = find_if(a, a, is_greater_than_2);
+  assert(test == a);
+  {
+   constexpr auto range = find_if(a, is_greater_than_2);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 0);
+  }
+  {
+   constexpr auto range = find_if(b, is_greater_than_2);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 0);
+  }
+  {
+   constexpr auto range = find_if(c, is_greater_than_2);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 0);
+  }
+  {
+   constexpr auto range = find_if(d, is_greater_than_2);
+   constexpr auto first = range.begin(), last = range.end();
+   constexpr auto diff = last - first;
+   assert(diff == 1);
+  }
+ }
 }

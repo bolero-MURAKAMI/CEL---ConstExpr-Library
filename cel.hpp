@@ -95,12 +95,18 @@ namespace sscrisk{ namespace cel{
   {
    return first == last ? last : *first == value ? first : find(first + 1, last, value);
   }
+
+  template<class Array>
+  struct array_to_const_ptr
+  {
+   typedef typename std::decay<
+    typename std::add_const<Array>::type
+   >::type type;
+  };
   
   template<class Range, class T>
   constexpr range_container<
-   typename std::decay<
-    typename std::add_const<Range>::type
-   >::type
+   typename array_to_const_ptr<Range>::type
   >
   find(Range const & range, T const & value)
   {
@@ -108,8 +114,20 @@ namespace sscrisk{ namespace cel{
   }
 
   template<class InputIterator, class Predicate>
-  InputIterator find_if(InputIterator first, InputIterator last,
-                        Predicate pred);
+  constexpr InputIterator find_if(InputIterator first, InputIterator last, Predicate pred)
+  {
+   return first == last ? last : pred(*first) ? first : find_if(first + 1, last, pred);
+  }
+
+  template<class Range, class Predicate>
+  constexpr range_container<
+   typename array_to_const_ptr<Range>::type
+  >
+  find_if(Range const & range, Predicate pred)
+  {
+   return {find_if(begin(range), end(range), pred), end(range)};
+  }
+  
   template<class InputIterator, class Predicate>
   InputIterator find_if_not(InputIterator first, InputIterator last,
                             Predicate pred);
