@@ -259,6 +259,10 @@ int main()
    constexpr auto test2 = adjacent_find(e);
    assert(test2.end() - test2.begin() == 5);
    assert(*test2.begin() == *(test2.begin() + 1));
+   constexpr auto test3 = adjacent_find(a, are_greater_than_2);
+   assert(test3.begin() == test3.end());
+   constexpr auto test5 = adjacent_find(e, are_greater_than_2);
+   assert(*test5.begin() > 2 && *(test5.begin() + 1) > 2);
   }
 
   // count
