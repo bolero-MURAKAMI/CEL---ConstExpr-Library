@@ -1,0 +1,8 @@
+CEL - ConstExpr Library
+
+C++0x の constexpr ベースのライブラリ。
+
+<algorithm> に対応するのが algorithm.hpp
+algorithm.hpp のテストが algorithm.cpp
+
+ライセンスはBoost Licenseにしようかと思ってる。
