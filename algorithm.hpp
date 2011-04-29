@@ -4,7 +4,7 @@
 #pragma once
 #endif
 
-// cel.hpp
+// algorithm.hpp
 
 #include<cstddef>
 #include<iterator>
