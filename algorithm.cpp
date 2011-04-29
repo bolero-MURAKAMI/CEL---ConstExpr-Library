@@ -254,6 +254,11 @@ int main()
 
   // adjacent_find
   {
+   constexpr auto test1 = adjacent_find(a);
+   assert(test1.begin() == test1.end());
+   constexpr auto test2 = adjacent_find(e);
+   assert(test2.end() - test2.begin() == 5);
+   assert(*test2.begin() == *(test2.begin() + 1));
   }
 
   // count

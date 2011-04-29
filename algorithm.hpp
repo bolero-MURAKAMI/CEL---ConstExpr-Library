@@ -182,6 +182,25 @@ namespace sscrisk{ namespace cel{
     return {cel::find_if_not(begin(range), end(range), pred), end(range)};
    }
 
+   // 25.2.8 Adjacent find
+   template<class Range>
+   constexpr range_container<
+    typename array_to_const_ptr<Range>::type
+   >
+   adjacent_find(Range const & range)
+   {
+    return {cel::adjacent_find(begin(range), end(range)), end(range)};
+   }
+
+   template<class Range, class BinaryPredicate>
+   constexpr range_container<
+    typename array_to_const_ptr<Range>::type
+   >
+   adjacent_find(Range const & range, BinaryPredicate pred)
+   {
+    return {cel::adjacent_find(begin(range), end(range), pred), end(range)};
+   }
+
    // 25.2.9 Count
    template<class Range, class T>
    constexpr typename std::iterator_traits<typename array_to_const_ptr<Range>::type>::difference_type
