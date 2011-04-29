@@ -5,8 +5,6 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include<cassert>
-#include<array>
-#include<iostream>
 #include<sscrisk/cel/algorithm.hpp>
 
 constexpr bool is_less_than_2(int n)
