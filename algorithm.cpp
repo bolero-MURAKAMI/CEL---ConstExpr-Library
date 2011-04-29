@@ -113,6 +113,10 @@ int main()
    constexpr auto beg = begin(a);
    constexpr auto ed = end(a);
    assert(ed - beg == 1);
+   constexpr range_container<int const *> range(beg, ed);
+   assert(!range.empty());
+   constexpr range_container<int const *> range2(range.begin() + 1, range.end());
+   assert(range2.empty());
   }
 
   // all_of

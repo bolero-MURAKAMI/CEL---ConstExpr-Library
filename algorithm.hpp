@@ -137,6 +137,7 @@ namespace sscrisk{ namespace cel{
      {}
     constexpr Iterator begin()const{ return first; }
     constexpr Iterator end()const{ return last; }
+    constexpr bool empty()const{ return first == last; }
    };
 
    // 25.2.1 All of
