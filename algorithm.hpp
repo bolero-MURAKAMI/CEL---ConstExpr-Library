@@ -144,6 +144,21 @@ namespace sscrisk{ namespace cel{
    return {find_if_not(begin(range), end(range), pred), end(range)};
   }
 
+  // 25.2.8 Adjacent find
+  template<class ForwardIterator>
+  constexpr ForwardIterator adjacent_find(ForwardIterator first, ForwardIterator last)
+  {
+   return first == last || first + 1 == last ? last
+    : *first == *(first + 1) ? first : adjacent_find(first + 1, last);
+  }
+  
+  template<class ForwardIterator, class BinaryPredicate>
+  constexpr ForwardIterator adjacent_find(ForwardIterator first, ForwardIterator last, BinaryPredicate pred)
+  {
+   return first == last || first + 1 == last ? last
+    : pred(*first, *(first + 1)) != false ? first : adjacent_find(first + 1, last, pred);
+  }
+
   // 25.2.9 Count
   template<class InputIterator, class T>
   constexpr typename std::iterator_traits<InputIterator>::difference_type

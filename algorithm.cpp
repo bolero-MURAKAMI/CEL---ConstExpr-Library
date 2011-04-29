@@ -1,7 +1,7 @@
 #include<cassert>
 #include<array>
 #include<iostream>
-#include<sscrisk/cel/cel.hpp>
+#include<sscrisk/cel/algorithm.hpp>
 
 // for name demangling.
 #include<cstdlib>
@@ -41,6 +41,11 @@ constexpr bool is_less_than_3(int n)
 constexpr bool is_greater_than_2(int n)
 {
  return n > 2;
+}
+
+constexpr bool are_greater_than_3(int n, int m)
+{
+ return n > 3 && m > 3;
 }
 
 int main()
@@ -187,6 +192,25 @@ int main()
    assert(diff == 1);
    assert(!(*first < 3));
   }
+ }
+
+ // adjacent_find
+ {
+  constexpr auto test1 = adjacent_find(a, a);
+  assert(test1 == a);
+  constexpr auto test2 = adjacent_find(begin(a), end(a));
+  assert(test2 == end(a));
+  constexpr auto test3 = adjacent_find(begin(b), end(b));
+  assert(test3 == end(b));
+  static constexpr int e[] = {0, 1, 2, 3, 3, 4, 5};
+  constexpr auto test4 = adjacent_find(begin(e), end(e));
+  assert(*test4 == 3);
+  assert(*(test4 + 1) == 3);
+  assert(test4 - e == 3);
+  constexpr auto test5 = adjacent_find(begin(e), end(e), are_greater_than_3);
+  assert(*test5 > 3);
+  assert(*(test5 + 1) > 3);
+  assert(test5 - e == 5);
  }
 
  // count
