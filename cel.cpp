@@ -188,4 +188,34 @@ int main()
    assert(!(*first < 3));
   }
  }
+
+ // count
+ {
+  constexpr auto test1 = count(a, a, 0);
+  assert(test1 == 0);
+  constexpr auto test2 = count(a, 0);
+  assert(test2 == 1);
+  constexpr auto test3 = count(d, 3);
+  assert(test3 == 1);
+  static constexpr int e[] = {0, 1, 2, 0, 1, 2, 0};
+  constexpr auto test4 = count(e, 0);
+  assert(test4 == 3);
+  constexpr auto test5 = count(e, 3);
+  assert(test5 == 0);
+ }
+
+ // count_if
+ {
+  constexpr auto test1 = count_if(a, a, is_less_than_3);
+  assert(test1 == 0);
+  constexpr auto test2 = count_if(a, is_less_than_3);
+  assert(test2 == 1);
+  constexpr auto test3 = count_if(d, is_less_than_3);
+  assert(test3 == 3);
+  static constexpr int e[] = {3, 1, 2, 3, 1, 2, 3};
+  constexpr auto test4 = count_if(e, is_less_than_3);
+  assert(test4 == 4);
+  constexpr auto test5 = count_if(e, is_greater_than_2);
+  assert(test5 == 3);
+ }
 }

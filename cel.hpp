@@ -40,6 +40,7 @@ namespace sscrisk{ namespace cel{
   struct range_container
   {
    typedef Iterator const_iterator;
+   typedef typename std::iterator_traits<Iterator>::difference_type difference_type;
   private:
    Iterator first, last;
   public:
@@ -142,6 +143,36 @@ namespace sscrisk{ namespace cel{
   {
    return {find_if_not(begin(range), end(range), pred), end(range)};
   }
+
+  // 25.2.9 Count
+  template<class InputIterator, class T>
+  constexpr typename std::iterator_traits<InputIterator>::difference_type
+  count(InputIterator first, InputIterator last, const T& value)
+  {
+   return first == last ? 0 : (*first == value ? 1 : 0) + count(first + 1, last, value);
+  }
+
+  template<class Range, class T>
+  constexpr typename std::iterator_traits<typename array_to_const_ptr<Range>::type>::difference_type
+  count(Range const & range, T const & value)
+  {
+   return count(begin(range), end(range), value);
+  }
+  
+  template<class InputIterator, class Predicate>
+  constexpr typename std::iterator_traits<InputIterator>::difference_type
+  count_if(InputIterator first, InputIterator last, Predicate pred)
+  {
+   return first == last ? 0 : (pred(*first) ? 1 : 0) + count_if(first + 1, last, pred);
+  }
+
+  template<class Range, class Predicate>
+  constexpr typename std::iterator_traits<typename array_to_const_ptr<Range>::type>::difference_type
+  count_if(Range const & range, Predicate pred)
+  {
+   return count_if(begin(range), end(range), pred);
+  }
+
 }}
 
 #endif
