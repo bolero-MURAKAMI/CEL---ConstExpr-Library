@@ -29,33 +29,33 @@ namespace sscrisk{ namespace cel{
   template<class Iterator, class Predicate>
   constexpr bool any_of(Iterator first, Iterator last, Predicate pred)
   {
-   return first == last ? false : pred(*first) || any_of(first + 1, last, pred);
+   return first == last ? false : pred(*first) == true || any_of(first + 1, last, pred);
   }
 
   // 25.2.3 None of
-  template <class InputIterator, class Predicate>
-  constexpr bool none_of(InputIterator first, InputIterator last, Predicate pred)
+  template <class Iterator, class Predicate>
+  constexpr bool none_of(Iterator first, Iterator last, Predicate pred)
   {
-   return first == last ? true : !pred(*first) && none_of(first + 1, last, pred);
+   return first == last ? true : pred(*first) == false && none_of(first + 1, last, pred);
   }
 
   // 25.2.5 Find
-  template<class InputIterator, class T>
-  constexpr InputIterator find(InputIterator first, InputIterator last, T const & value)
+  template<class Iterator, class T>
+  constexpr Iterator find(Iterator first, Iterator last, T const & value)
   {
    return first == last ? last : *first == value ? first : find(first + 1, last, value);
   }
 
-  template<class InputIterator, class Predicate>
-  constexpr InputIterator find_if(InputIterator first, InputIterator last, Predicate pred)
+  template<class Iterator, class Predicate>
+  constexpr Iterator find_if(Iterator first, Iterator last, Predicate pred)
   {
-   return first == last ? last : pred(*first) ? first : find_if(first + 1, last, pred);
+   return first == last ? last : pred(*first) != false ? first : find_if(first + 1, last, pred);
   }
 
-  template<class InputIterator, class Predicate>
-  constexpr InputIterator find_if_not(InputIterator first, InputIterator last, Predicate pred)
+  template<class Iterator, class Predicate>
+  constexpr Iterator find_if_not(Iterator first, Iterator last, Predicate pred)
   {
-   return first == last ? last : !pred(*first) ? first : find_if_not(first + 1, last, pred);
+   return first == last ? last : pred(*first) == false ? first : find_if_not(first + 1, last, pred);
   }
 
   // 25.2.8 Adjacent find
@@ -74,18 +74,18 @@ namespace sscrisk{ namespace cel{
   }
 
   // 25.2.9 Count
-  template<class InputIterator, class T>
-  constexpr typename std::iterator_traits<InputIterator>::difference_type
-  count(InputIterator first, InputIterator last, const T& value)
+  template<class Iterator, class T>
+  constexpr typename std::iterator_traits<Iterator>::difference_type
+  count(Iterator first, Iterator last, const T& value)
   {
    return first == last ? 0 : (*first == value ? 1 : 0) + count(first + 1, last, value);
   }
 
-  template<class InputIterator, class Predicate>
-  constexpr typename std::iterator_traits<InputIterator>::difference_type
-  count_if(InputIterator first, InputIterator last, Predicate pred)
+  template<class Iterator, class Predicate>
+  constexpr typename std::iterator_traits<Iterator>::difference_type
+  count_if(Iterator first, Iterator last, Predicate pred)
   {
-   return first == last ? 0 : (pred(*first) ? 1 : 0) + count_if(first + 1, last, pred);
+   return first == last ? 0 : (pred(*first) != false ? 1 : 0) + count_if(first + 1, last, pred);
   }
 
   namespace range{
