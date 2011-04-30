@@ -44,39 +44,39 @@ namespace sscrisk{ namespace cel{
   template<class Iterator, class T>
   constexpr Iterator find(Iterator first, Iterator last, T const & value)
   {
-   return first == last ? last : *first == value ? first : find(first + 1, last, value);
+   return first == last || *first == value ? first : find(first + 1, last, value);
   }
 
   template<class Iterator, class Predicate>
   constexpr Iterator find_if(Iterator first, Iterator last, Predicate pred)
   {
-   return first == last ? last : pred(*first) != false ? first : find_if(first + 1, last, pred);
+   return first == last || pred(*first) != false ? first : find_if(first + 1, last, pred);
   }
 
   template<class Iterator, class Predicate>
   constexpr Iterator find_if_not(Iterator first, Iterator last, Predicate pred)
   {
-   return first == last ? last : pred(*first) == false ? first : find_if_not(first + 1, last, pred);
+   return first == last || pred(*first) == false ? first : find_if_not(first + 1, last, pred);
   }
 
   // 25.2.7 Find first
   template<class Iterator1, class Iterator2>
   constexpr Iterator1 find_first_of(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
   {
-   return first1 == last1 ? last1
-    : find(first2, last2, *first1) != last2 ? first1 : find_first_of(first1 + 1, last1, first2, last2);
+   return first1 == last1 || find(first2, last2, *first1) != last2
+    ? first1 : find_first_of(first1 + 1, last1, first2, last2);
   }
 
   // 25.2.8 Adjacent find
-  template<class ForwardIterator>
-  constexpr ForwardIterator adjacent_find(ForwardIterator first, ForwardIterator last)
+  template<class Iterator>
+  constexpr Iterator adjacent_find(Iterator first, Iterator last)
   {
    return first == last || first + 1 == last ? last
     : *first == *(first + 1) ? first : adjacent_find(first + 1, last);
   }
 
-  template<class ForwardIterator, class BinaryPredicate>
-  constexpr ForwardIterator adjacent_find(ForwardIterator first, ForwardIterator last, BinaryPredicate pred)
+  template<class Iterator, class BinaryPredicate>
+  constexpr Iterator adjacent_find(Iterator first, Iterator last, BinaryPredicate pred)
   {
    return first == last || first + 1 == last ? last
     : pred(*first, *(first + 1)) != false ? first : adjacent_find(first + 1, last, pred);
