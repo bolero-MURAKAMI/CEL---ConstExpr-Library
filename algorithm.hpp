@@ -108,7 +108,11 @@ namespace sscrisk{ namespace cel{
 
   template<class Iterator1, class Iterator2, class BinaryPredicate>
   constexpr pair<Iterator1, Iterator2>
-  mismatch(Iterator1 first1, Iterator1 last1, Iterator2 first2, BinaryPredicate pred);
+  mismatch(Iterator1 first1, Iterator1 last1, Iterator2 first2, BinaryPredicate pred)
+  {
+   return first1 == last1 || pred(*first1, *first2) == false ? pair<Iterator1, Iterator2>{first1, first2}
+    : mismatch(first1 + 1, last1, first2 + 1);
+  }
 
   // 25.2.11 Equal
   template<class Iterator1, class Iterator2>

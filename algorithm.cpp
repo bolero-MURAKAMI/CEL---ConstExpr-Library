@@ -133,17 +133,32 @@ int main()
 
   // mismatch
   {
-   constexpr auto test1 = mismatch(a, a, b);
-   assert(test1.first == a);
-   assert(test1.second == b);
-   constexpr auto test2 = mismatch(c, c + 3, d);
-   assert(test2.first == c + 3);
-   assert(test2.second == d + 3);
-   static constexpr int f[] = {0, 1, 2, 4};
-   constexpr auto test3 = mismatch(d, d + 4, f);
-   assert(test3.first == d + 3);
-   assert(test3.second == f + 3);
-   assert(*test3.first != *test3.second);
+   {
+    constexpr auto test1 = mismatch(a, a, b);
+    assert(test1.first == a);
+    assert(test1.second == b);
+    constexpr auto test2 = mismatch(c, c + 3, d);
+    assert(test2.first == c + 3);
+    assert(test2.second == d + 3);
+    static constexpr int f[] = {0, 1, 2, 4};
+    constexpr auto test3 = mismatch(d, d + 4, f);
+    assert(test3.first == d + 3);
+    assert(test3.second == f + 3);
+    assert(*test3.first != *test3.second);
+   }
+   {
+    constexpr auto test1 = mismatch(a, a, b, eq);
+    assert(test1.first == a);
+    assert(test1.second == b);
+    constexpr auto test2 = mismatch(c, c + 3, d, eq);
+    assert(test2.first == c + 3);
+    assert(test2.second == d + 3);
+    static constexpr int f[] = {0, 1, 2, 4};
+    constexpr auto test3 = mismatch(d, d + 4, f, eq);
+    assert(test3.first == d + 3);
+    assert(test3.second == f + 3);
+    assert(*test3.first != *test3.second);
+   }
   }
 
   // equal
