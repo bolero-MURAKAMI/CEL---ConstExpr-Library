@@ -15,6 +15,7 @@
 #include<cstddef>
 #include<iterator>
 #include<type_traits>
+#include<sscrisk/cel/utility.hpp>
 
 namespace sscrisk{ namespace cel{
 
@@ -95,6 +96,36 @@ namespace sscrisk{ namespace cel{
   {
    return first == last ? 0 : (pred(*first) != false ? 1 : 0) + count_if(first + 1, last, pred);
   }
+
+  namespace detail{
+
+   template<class Iterator1, class Iterator2>
+   constexpr Iterator1 mismatch_return_1(Iterator1 first1, Iterator1 last1, Iterator2 first2)
+   {
+    return first1 == last1 ? last1
+     : !(*first1 == *first2) ? first1 : mismatch_return_1(first1 + 1, last1, first2 + 1);
+   }
+
+   template<class Iterator1, class Iterator2>
+   constexpr Iterator1 mismatch_return_2(Iterator1 first1, Iterator1 last1, Iterator2 first2)
+   {
+    return first1 == last1 ? first2
+     : !(*first1 == *first2) ? first2 : mismatch_return_2(first1 + 1, last1, first2 + 1);
+   }
+
+  }
+
+  // 25.2.10 Mismatch
+  template<class Iterator1, class Iterator2>
+  constexpr pair<Iterator1, Iterator2>
+  mismatch(Iterator1 first1, Iterator1 last1, Iterator2 first2)
+  {
+   return {detail::mismatch_return_1(first1, last1, first2), detail::mismatch_return_2(first1, last1, first2)};
+  }
+
+  template<class Iterator1, class Iterator2, class BinaryPredicate>
+  constexpr pair<Iterator1, Iterator2>
+  mismatch(Iterator1 first1, Iterator1 last1, Iterator2 first2, BinaryPredicate pred);
 
   // 25.2.11 Equal
   template<class Iterator1, class Iterator2>
@@ -208,6 +239,16 @@ namespace sscrisk{ namespace cel{
    find_if_not(Range const & range, Predicate pred)
    {
     return {cel::find_if_not(begin(range), end(range), pred), end(range)};
+   }
+
+   // 25.2.7 Find first
+   template<class Range1, class Range2>
+   constexpr range_container<
+    typename array_to_const_ptr<Range1>::type
+   >
+   find_first_of(Range1 const & range1, Range2 const & range2)
+   {
+    return {cel::find_first_of(begin(range1), end(range1), begin(range2), end(range2)), end(range1)};
    }
 
    // 25.2.8 Adjacent find

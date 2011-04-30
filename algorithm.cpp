@@ -131,6 +131,24 @@ int main()
    assert(test1 == 0);
   }
 
+  // mismatch
+  {
+   // constexpr auto test0 = detail::mismatch_return_1(a, a, b);
+   // constexpr auto test1 = detail::mismatch_return_2(a, a, b);
+   // constexpr pair<decltype(test0), decltype(test1)> test2 = {test0, test1};
+   constexpr auto test1 = mismatch(a, a, b);
+   assert(test1.first == a);
+   assert(test1.second == b);
+   constexpr auto test2 = mismatch(c, c + 3, d);
+   assert(test2.first == c + 3);
+   assert(test2.second == d + 3);
+   static constexpr int f[] = {0, 1, 2, 4};
+   constexpr auto test3 = mismatch(d, d + 4, f);
+   assert(test3.first == d + 3);
+   assert(test3.second == f + 3);
+   assert(*test3.first != *test3.second);
+  }
+
   // equal
   {
    {
@@ -281,6 +299,16 @@ int main()
     assert(diff == 2);
     assert(!(*first < 2));
    }
+  }
+
+  // find_first_of
+  {
+   static constexpr int f[] = {6, 5};
+   constexpr auto test1 = find_first_of(f, a);
+   assert(test1.empty());
+   constexpr auto test2 = find_first_of(f, e);
+   assert(!test2.empty());
+   assert(*test2.begin() == 5);
   }
 
   // adjacent_find
