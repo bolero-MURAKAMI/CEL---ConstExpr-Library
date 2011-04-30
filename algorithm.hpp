@@ -236,6 +236,18 @@ namespace sscrisk{ namespace cel{
     return cel::count_if(begin(range), end(range), pred);
    }
 
+   // 25.2.11 Equal
+   template<class Range1, class Range2>
+   constexpr bool equal(Range1 const & range1, Range2 const & range2)
+   {
+    return cel::equal(begin(range1), end(range1), begin(range2));
+   }
+  
+   template<class Range1, class Range2, class BinaryPredicate>
+   constexpr bool equal(Range1 const & range1, Range2 const & range2, BinaryPredicate pred)
+   {
+    return cel::equal(begin(range1), end(range1), begin(range2), pred);
+   }
   }
 
 }}

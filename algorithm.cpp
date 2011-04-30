@@ -297,5 +297,26 @@ int main()
    constexpr auto test5 = count_if(e, is_greater_than_1);
    assert(test5 == 5);
   }
+
+  // equal
+  {
+   {
+    constexpr bool test2 = equal(d, e);
+    assert(test2);
+    static constexpr int f[] = {0, 1, 2, 4};
+    constexpr bool test3 = equal(d, f);
+    assert(!test3);
+   }
+   {
+    constexpr bool test2 = equal(d, e, abs_equal);
+    assert(test2);
+    static constexpr int f[] = {0, 1, 2, 4};
+    constexpr bool test3 = equal(d, f, abs_equal);
+    assert(!test3);
+    static constexpr int g[] = {0, -1, -2, -3};
+    constexpr bool test4 = equal(d, g, abs_equal);
+    assert(test4);
+   }
+  }
  }
 }
