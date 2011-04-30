@@ -22,6 +22,11 @@ constexpr bool are_greater_than_2(int n, int m)
  return n > 2 && m > 2;
 }
 
+constexpr bool abs_equal(int n, int m)
+{
+ return (n >= 0 ? n : -n) == (m >= 0 ? m : -m);
+}
+
 int main()
 {
  static constexpr int a[] = {0};
@@ -101,6 +106,31 @@ int main()
   {
    constexpr auto test1 = count_if(a, a, is_less_than_2);
    assert(test1 == 0);
+  }
+
+  // equal
+  {
+   {
+    constexpr bool test1 = equal(a, a, b);
+    assert(test1);
+    constexpr bool test2 = equal(d, d + 4, e);
+    assert(test2);
+    static constexpr int f[] = {0, 1, 2, 4};
+    constexpr bool test3 = equal(d, d + 4, f);
+    assert(!test3);
+   }
+   {
+    constexpr bool test1 = equal(a, a, b, abs_equal);
+    assert(test1);
+    constexpr bool test2 = equal(d, d + 4, e, abs_equal);
+    assert(test2);
+    static constexpr int f[] = {0, 1, 2, 4};
+    constexpr bool test3 = equal(d, d + 4, f, abs_equal);
+    assert(!test3);
+    static constexpr int g[] = {0, -1, -2, -3};
+    constexpr bool test4 = equal(d, d + 4, g, abs_equal);
+    assert(test4);
+   }
   }
  }
 
