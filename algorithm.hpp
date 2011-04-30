@@ -97,30 +97,13 @@ namespace sscrisk{ namespace cel{
    return first == last ? 0 : (pred(*first) != false ? 1 : 0) + count_if(first + 1, last, pred);
   }
 
-  namespace detail{
-
-   template<class Iterator1, class Iterator2>
-   constexpr Iterator1 mismatch_return_1(Iterator1 first1, Iterator1 last1, Iterator2 first2)
-   {
-    return first1 == last1 ? last1
-     : !(*first1 == *first2) ? first1 : mismatch_return_1(first1 + 1, last1, first2 + 1);
-   }
-
-   template<class Iterator1, class Iterator2>
-   constexpr Iterator1 mismatch_return_2(Iterator1 first1, Iterator1 last1, Iterator2 first2)
-   {
-    return first1 == last1 ? first2
-     : !(*first1 == *first2) ? first2 : mismatch_return_2(first1 + 1, last1, first2 + 1);
-   }
-
-  }
-
   // 25.2.10 Mismatch
   template<class Iterator1, class Iterator2>
   constexpr pair<Iterator1, Iterator2>
   mismatch(Iterator1 first1, Iterator1 last1, Iterator2 first2)
   {
-   return {detail::mismatch_return_1(first1, last1, first2), detail::mismatch_return_2(first1, last1, first2)};
+   return first1 == last1 || !(*first1 == *first2) ? pair<Iterator1, Iterator2>{first1, first2}
+    : mismatch(first1 + 1, last1, first2 + 1);
   }
 
   template<class Iterator1, class Iterator2, class BinaryPredicate>

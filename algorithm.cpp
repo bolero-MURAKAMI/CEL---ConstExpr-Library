@@ -133,9 +133,6 @@ int main()
 
   // mismatch
   {
-   // constexpr auto test0 = detail::mismatch_return_1(a, a, b);
-   // constexpr auto test1 = detail::mismatch_return_2(a, a, b);
-   // constexpr pair<decltype(test0), decltype(test1)> test2 = {test0, test1};
    constexpr auto test1 = mismatch(a, a, b);
    assert(test1.first == a);
    assert(test1.second == b);
