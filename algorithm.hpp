@@ -58,6 +58,14 @@ namespace sscrisk{ namespace cel{
    return first == last ? last : pred(*first) == false ? first : find_if_not(first + 1, last, pred);
   }
 
+  // 25.2.7 Find first
+  template<class Iterator1, class Iterator2>
+  constexpr Iterator1 find_first_of(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
+  {
+   return first1 == last1 ? last1
+    : find(first2, last2, *first1) != last2 ? first1 : find_first_of(first1 + 1, last1, first2, last2);
+  }
+
   // 25.2.8 Adjacent find
   template<class ForwardIterator>
   constexpr ForwardIterator adjacent_find(ForwardIterator first, ForwardIterator last)
@@ -65,7 +73,7 @@ namespace sscrisk{ namespace cel{
    return first == last || first + 1 == last ? last
     : *first == *(first + 1) ? first : adjacent_find(first + 1, last);
   }
-  
+
   template<class ForwardIterator, class BinaryPredicate>
   constexpr ForwardIterator adjacent_find(ForwardIterator first, ForwardIterator last, BinaryPredicate pred)
   {
@@ -94,13 +102,13 @@ namespace sscrisk{ namespace cel{
   {
    return first1 == last1 ? true : *first1 == *first2 && equal(first1 + 1, last1, first2 + 1);
   }
-  
+
   template<class Iterator1, class Iterator2, class BinaryPredicate>
   constexpr bool equal(Iterator1 first1, Iterator1 last1, Iterator2 first2, BinaryPredicate pred)
   {
    return first1 == last1 ? true : pred(*first1, *first2) != false && equal(first1 + 1, last1, first2 + 1, pred);
   }
-  
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;
@@ -110,7 +118,7 @@ namespace sscrisk{ namespace cel{
    {
     return range.begin();
    }
-  
+
    template<class T, size_t N>
    constexpr T const * begin(T const (& array)[N])
    {
@@ -122,7 +130,7 @@ namespace sscrisk{ namespace cel{
    {
     return range.end();
    }
-  
+
    template<class T, size_t N>
    constexpr T const * end(T const (& array)[N])
    {
@@ -147,7 +155,7 @@ namespace sscrisk{ namespace cel{
    public:
     constexpr range_container(Iterator first, Iterator last)
      : first(first), last(last)
-     {}
+    {}
     constexpr Iterator begin()const{ return first; }
     constexpr Iterator end()const{ return last; }
     constexpr bool empty()const{ return first == last; }
@@ -192,7 +200,7 @@ namespace sscrisk{ namespace cel{
    {
     return {cel::find_if(begin(range), end(range), pred), end(range)};
    }
-  
+
    template<class Range, class Predicate>
    constexpr range_container<
     typename array_to_const_ptr<Range>::type
@@ -242,7 +250,7 @@ namespace sscrisk{ namespace cel{
    {
     return cel::equal(begin(range1), end(range1), begin(range2));
    }
-  
+
    template<class Range1, class Range2, class BinaryPredicate>
    constexpr bool equal(Range1 const & range1, Range2 const & range2, BinaryPredicate pred)
    {

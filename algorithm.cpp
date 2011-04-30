@@ -27,6 +27,11 @@ constexpr bool abs_equal(int n, int m)
  return (n >= 0 ? n : -n) == (m >= 0 ? m : -m);
 }
 
+constexpr bool eq(int n, int m)
+{
+ return n == m;
+}
+
 int main()
 {
  static constexpr int a[] = {0};
@@ -76,6 +81,24 @@ int main()
   {
    constexpr auto iter = find_if_not(a, a, is_less_than_2);
    assert(iter == a);
+  }
+
+  // find_first_of
+  {
+   {
+    constexpr auto test1 = find_first_of(a, a, b, b);
+    assert(test1 == a);
+    constexpr auto test2 = find_first_of(a, a, b, b + 2);
+    assert(test2 == a);
+    constexpr auto test3 = find_first_of(a, a + 1, b, b);
+    assert(test3 == a + 1);
+    static constexpr int f[] = {6, 5, 4, 3, 2, 1, 0};
+    constexpr auto test4 = find_first_of(f, f + 7, a, a + 1);
+    assert(test4 == f + 6);
+    assert(*test4 == 0);
+    constexpr auto test5 = find_first_of(f, f + 3, a, a + 1);
+    assert(test5 == f + 3);
+   }
   }
 
   // adjacent_find
