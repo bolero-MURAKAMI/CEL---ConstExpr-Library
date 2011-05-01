@@ -12,6 +12,8 @@
 
 // iterator.hpp
 
+#include<iterator>
+
 namespace sscrisk{ namespace cel{
 
   // 24.4.4 Iterator operations
