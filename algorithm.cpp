@@ -209,6 +209,34 @@ int main()
     assert(test4 == c + 1);
    }
   }
+
+  // search_n
+  {
+   {
+    constexpr auto test1 = search_n(a, a, 0, 0);
+    assert(test1 == a);
+    constexpr auto test2 = search_n(a, a + 1, 0, 0);
+    assert(test2 == a);
+    constexpr auto test3 = search_n(a, a + 1, 1, 0);
+    assert(test3 == a);
+    constexpr auto test4 = search_n(a, a + 1, 2, 0);
+    assert(test4 == a + 1);
+    constexpr auto test5 = search_n(e, e + 8, 2, 3);
+    assert(test5 == e + 3);
+   }
+   {
+    constexpr auto test1 = search_n(a, a, 0, 0, eq);
+    assert(test1 == a);
+    constexpr auto test2 = search_n(a, a + 1, 0, 0, eq);
+    assert(test2 == a);
+    constexpr auto test3 = search_n(a, a + 1, 1, 0, eq);
+    assert(test3 == a);
+    constexpr auto test4 = search_n(a, a + 1, 2, 0, eq);
+    assert(test4 == a + 1);
+    constexpr auto test5 = search_n(e, e + 8, 2, 3, eq);
+    assert(test5 == e + 3);
+   }
+  }
  }
 
  // range

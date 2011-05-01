@@ -136,15 +136,32 @@ namespace sscrisk{ namespace cel{
     : *first1 == *first2 && search(first1 + 1, last1, first2 + 1, last2) == first1 + 1 ? first1
     : search(first1 + 1, last1, first2, last2);
   }
-  
+
   template<class Iterator1, class Iterator2, class BinaryPredicate>
   constexpr Iterator1 search(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2,
                              BinaryPredicate pred)
   {
-   return first2 == last2 ? first1
-    : first1 == last1 ? last1
+   return first2 == last2 || first1 == last1 ? first1
     : *first1 == *first2 && search(first1 + 1, last1, first2 + 1, last2, pred) == first1 + 1 ? first1
     : search(first1 + 1, last1, first2, last2, pred);
+  }
+
+  template<class Iterator, class Size, class T>
+  constexpr Iterator search_n(Iterator first, Iterator last, Size count, const T& value)
+  {
+   return first == last || count == 0 ? first
+    : first + 1 == last && count > 1 ? last
+    : *first == value && search_n(first + 1, last, count - 1, value) == first + 1 ? first
+    : search_n(first + 1, last, count, value);
+  }
+
+  template<class Iterator, class Size, class T, class BinaryPredicate>
+  constexpr Iterator search_n(Iterator first, Iterator last, Size count, const T& value, BinaryPredicate pred)
+  {
+   return first == last || count == 0 ? first
+    : first + 1 == last && count > 1 ? last
+    : *first == value && search_n(first + 1, last, count - 1, value, pred) == first + 1 ? first
+    : search_n(first + 1, last, count, value, pred);
   }
 
   namespace range{
