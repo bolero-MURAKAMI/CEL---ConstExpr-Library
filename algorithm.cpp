@@ -186,6 +186,25 @@ int main()
    }
   }
 
+  // is_permutation
+  {
+   constexpr bool test1 = is_permutation(a, a, b);
+   assert(test1 == true);
+   constexpr bool test2 = is_permutation(a, a + 1, b);
+   assert(test2 == true);
+   static constexpr int x[] = {1};
+   constexpr bool test3 = is_permutation(a, a + 1, x);
+   assert(test3 == false);
+   constexpr bool test4 = is_permutation(b, b + 2, c);
+   assert(test4 == true);
+   static constexpr int y[] = {1, 0};
+   constexpr bool test5 = is_permutation(b, b + 2, y);
+   assert(test5 == true);
+   static constexpr int g[] = {2, 0, 3, 5, 3, 1, 0, 4};
+   constexpr bool test6 = is_permutation(e, e + 8, g);
+   assert(test6 == true);
+  }
+
   // search
   {
    {
