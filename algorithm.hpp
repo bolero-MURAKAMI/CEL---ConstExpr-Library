@@ -127,6 +127,26 @@ namespace sscrisk{ namespace cel{
    return first1 == last1 ? true : pred(*first1, *first2) != false && equal(first1 + 1, last1, first2 + 1, pred);
   }
 
+  // 25.2.13 Search
+  template<class Iterator1, class Iterator2>
+  constexpr Iterator1 search(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
+  {
+   return first2 == last2 ? first1
+    : first1 == last1 ? last1
+    : *first1 == *first2 && search(first1 + 1, last1, first2 + 1, last2) == first1 + 1 ? first1
+    : search(first1 + 1, last1, first2, last2);
+  }
+  
+  template<class Iterator1, class Iterator2, class BinaryPredicate>
+  constexpr Iterator1 search(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2,
+                             BinaryPredicate pred)
+  {
+   return first2 == last2 ? first1
+    : first1 == last1 ? last1
+    : *first1 == *first2 && search(first1 + 1, last1, first2 + 1, last2, pred) == first1 + 1 ? first1
+    : search(first1 + 1, last1, first2, last2, pred);
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;

@@ -185,6 +185,30 @@ int main()
     assert(test4);
    }
   }
+
+  // search
+  {
+   {
+    constexpr auto test1 = search(a, a, b, b);
+    assert(test1 == a);
+    constexpr auto test2 = search(a, a + 1, b, b);
+    assert(test2 == a);
+    constexpr auto test3 = search(a, a, b, b + 1);
+    assert(test3 == a);
+    constexpr auto test4 = search(c, c + 3, d + 1, d + 3);
+    assert(test4 == c + 1);
+   }
+   {
+    constexpr auto test1 = search(a, a, b, b, eq);
+    assert(test1 == a);
+    constexpr auto test2 = search(a, a + 1, b, b, eq);
+    assert(test2 == a);
+    constexpr auto test3 = search(a, a, b, b + 1, eq);
+    assert(test3 == a);
+    constexpr auto test4 = search(c, c + 3, d + 1, d + 3, eq);
+    assert(test4 == c + 1);
+   }
+  }
  }
 
  // range
