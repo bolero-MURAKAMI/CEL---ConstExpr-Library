@@ -17,6 +17,7 @@
 #include<type_traits>
 #include<sscrisk/cel/utility.hpp>
 #include<sscrisk/cel/iterator.hpp>
+#include<sscrisk/cel/functional.hpp>
 
 namespace sscrisk{ namespace cel{
 
@@ -139,6 +140,17 @@ namespace sscrisk{ namespace cel{
      : false;
    }
 
+   template<class Iterator1, class Iterator2, class BinaryPredicate>
+   constexpr bool is_permutation_impl(Iterator1 first1, Iterator1 last1, Iterator2 first2,
+                                      Iterator1 first1_, BinaryPredicate pred)
+   {
+    return first1_ == last1 ? true
+     : count_if(first1, last1, bind2nd(pred, *first1_))
+        == count_if(first2, first2 + distance(first1, last1), bind2nd(pred, *first1_))
+       && is_permutation_impl(first1, last1, first2, first1_ + 1, pred) ? true
+     : false;
+   }
+
   }
 
   // 25.2.12 Is permutation
@@ -148,11 +160,11 @@ namespace sscrisk{ namespace cel{
    return detail::is_permutation_impl(first1, last1, first2, first1);
   }
 
-  // template<class Iterator1, class Iterator2, class BinaryPredicate>
-  // bool is_permutation(Iterator1 first1, Iterator1 last1, Iterator2 first2, BinaryPredicate pred)
-  // {
-  //  return false;
-  // }
+  template<class Iterator1, class Iterator2, class BinaryPredicate>
+  constexpr bool is_permutation(Iterator1 first1, Iterator1 last1, Iterator2 first2, BinaryPredicate pred)
+  {
+   return detail::is_permutation_impl(first1, last1, first2, first1, pred);
+  }
 
   // 25.2.13 Search
   template<class Iterator1, class Iterator2>
