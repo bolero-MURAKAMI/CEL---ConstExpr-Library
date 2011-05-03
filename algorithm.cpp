@@ -83,6 +83,43 @@ int main()
    assert(iter == a);
   }
 
+  // find_end
+  {
+   {
+    constexpr auto test1 = find_end(a, a, b, b);
+    assert(test1 == a);
+    constexpr auto test2 = find_end(a, a + 1, b, b);
+    assert(test2 == a + 1);
+    constexpr auto test3 = find_end(a, a, b, b + 1);
+    assert(test3 == a);
+    constexpr auto test4 = find_end(a, a + 1, b, b + 1);
+    assert(test4 == a);
+    constexpr auto test5 = find_end(a, a + 1, b, b + 2);
+    assert(test5 == a + 1);
+    constexpr auto test6 = find_end(b, b + 2, a, a + 1);
+    assert(test6 == b);
+    constexpr auto test7 = find_end(e, e + 8, a, a + 1);
+    assert(test7 == e + 7);
+   }
+   {
+    constexpr auto eq = equal_to<int>();
+    constexpr auto test1 = find_end(a, a, b, b, eq);
+    assert(test1 == a);
+    constexpr auto test2 = find_end(a, a + 1, b, b, eq);
+    assert(test2 == a + 1);
+    constexpr auto test3 = find_end(a, a, b, b + 1, eq);
+    assert(test3 == a);
+    constexpr auto test4 = find_end(a, a + 1, b, b + 1, eq);
+    assert(test4 == a);
+    constexpr auto test5 = find_end(a, a + 1, b, b + 2, eq);
+    assert(test5 == a + 1);
+    constexpr auto test6 = find_end(b, b + 2, a, a + 1, eq);
+    assert(test6 == b);
+    constexpr auto test7 = find_end(e, e + 8, a, a + 1, eq);
+    assert(test7 == e + 7);
+   }
+  }
+
   // find_first_of
   {
    {
@@ -97,6 +134,21 @@ int main()
     assert(test4 == f + 6);
     assert(*test4 == 0);
     constexpr auto test5 = find_first_of(f, f + 3, a, a + 1);
+    assert(test5 == f + 3);
+   }
+   {
+    constexpr auto eq = equal_to<int>();
+    constexpr auto test1 = find_first_of(a, a, b, b, eq);
+    assert(test1 == a);
+    constexpr auto test2 = find_first_of(a, a, b, b + 2, eq);
+    assert(test2 == a);
+    constexpr auto test3 = find_first_of(a, a + 1, b, b, eq);
+    assert(test3 == a + 1);
+    static constexpr int f[] = {6, 5, 4, 3, 2, 1, 0};
+    constexpr auto test4 = find_first_of(f, f + 7, a, a + 1, eq);
+    assert(test4 == f + 6);
+    assert(*test4 == 0);
+    constexpr auto test5 = find_first_of(f, f + 3, a, a + 1, eq);
     assert(test5 == f + 3);
    }
   }
@@ -221,6 +273,9 @@ int main()
     static constexpr int g[] = {2, 0, 3, 5, 3, 1, 0, 4};
     constexpr bool test6 = is_permutation(e, e + 8, g, equal_to<int>());
     assert(test6 == true);
+    // bug: bind2nd + function
+    // constexpr bool test7 = is_permutation(e, e + 8, g, eq);
+    // assert(test7 == true);
    }
   }
 
@@ -235,6 +290,8 @@ int main()
     assert(test3 == a);
     constexpr auto test4 = search(c, c + 3, d + 1, d + 3);
     assert(test4 == c + 1);
+    constexpr auto test5 = search(a, a + 1, b, b + 2);
+    assert(test5 == a + 1);
    }
    {
     constexpr auto test1 = search(a, a, b, b, eq);
@@ -245,6 +302,8 @@ int main()
     assert(test3 == a);
     constexpr auto test4 = search(c, c + 3, d + 1, d + 3, eq);
     assert(test4 == c + 1);
+    constexpr auto test5 = search(a, a + 1, b, b + 2, eq);
+    assert(test5 == a + 1);
    }
   }
 

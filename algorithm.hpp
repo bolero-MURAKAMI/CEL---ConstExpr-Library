@@ -61,12 +61,41 @@ namespace sscrisk{ namespace cel{
    return first == last || pred(*first) == false ? first : find_if_not(first + 1, last, pred);
   }
 
+  // 25.2.6 Find end
+  template<class Iterator1, class Iterator2>
+  constexpr Iterator1 find_end(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
+  {
+   return first1 == last1 || first2 == last2 ? last1
+    : search(first1, last1, first2, last2) == first1 && search(first1 + 1, last1, first2, last2) == last1
+       ? first1
+    : find_end(first1 + 1, last1, first2, last2);
+  }
+
+  template<class Iterator1, class Iterator2, class BinaryPredicate>
+  constexpr Iterator1 find_end(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2,
+                               BinaryPredicate pred)
+  {
+   return first1 == last1 || first2 == last2 ? last1
+    : search(first1, last1, first2, last2, pred) == first1
+        && search(first1 + 1, last1, first2, last2, pred) == last1
+       ? first1
+    : find_end(first1 + 1, last1, first2, last2);
+  }
+
   // 25.2.7 Find first
   template<class Iterator1, class Iterator2>
   constexpr Iterator1 find_first_of(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
   {
    return first1 == last1 || find(first2, last2, *first1) != last2
     ? first1 : find_first_of(first1 + 1, last1, first2, last2);
+  }
+
+  template<class Iterator1, class Iterator2, class BinaryPredicate>
+  constexpr Iterator1 find_first_of(Iterator1 first1, Iterator1 last1,
+                                   Iterator2 first2, Iterator2 last2, BinaryPredicate pred)
+  {
+   return first1 == last1 || find_if(first2, last2, bind2nd(pred, *first1)) != last2
+    ? first1 : find_first_of(first1 + 1, last1, first2, last2, pred);
   }
 
   // 25.2.8 Adjacent find
@@ -170,8 +199,8 @@ namespace sscrisk{ namespace cel{
   template<class Iterator1, class Iterator2>
   constexpr Iterator1 search(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
   {
-   return first2 == last2 ? first1
-    : first1 == last1 ? last1
+   return first1 == last1 || first2 == last2 ? first1
+    : distance(first1, last1) < distance(first2, last2) ? last1
     : *first1 == *first2 && search(first1 + 1, last1, first2 + 1, last2) == first1 + 1 ? first1
     : search(first1 + 1, last1, first2, last2);
   }
@@ -180,7 +209,8 @@ namespace sscrisk{ namespace cel{
   constexpr Iterator1 search(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2,
                              BinaryPredicate pred)
   {
-   return first2 == last2 || first1 == last1 ? first1
+   return first1 == last1 || first2 == last2 ? first1
+    : distance(first1, last1) < distance(first2, last2) ? last1
     : *first1 == *first2 && search(first1 + 1, last1, first2 + 1, last2, pred) == first1 + 1 ? first1
     : search(first1 + 1, last1, first2, last2, pred);
   }
