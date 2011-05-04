@@ -334,6 +334,18 @@ int main()
     assert(test5 == e + 3);
    }
   }
+
+  // is_sorted_until
+  {
+   constexpr auto test1 = is_sorted_until(a, a);
+   assert(test1 == a);
+   constexpr auto test2 = is_sorted_until(a, a + 1);
+   assert(test2 == a + 1);
+   constexpr auto test3 = is_sorted_until(b, b + 2);
+   assert(test3 == b + 2);
+   constexpr auto test4 = is_sorted_until(e, e + 8);
+   assert(test4 == e + 6);
+  }
  }
 
  // range

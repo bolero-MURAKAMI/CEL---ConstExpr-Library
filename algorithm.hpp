@@ -233,6 +233,15 @@ namespace sscrisk{ namespace cel{
     : search_n(first + 1, last, count, value, pred);
   }
 
+  // 25.4.1.5 is_sorted
+  template<class Iterator>
+  constexpr Iterator is_sorted_until(Iterator first, Iterator last)
+  {
+   return first == last || first + 1 == last ? last
+    : *(first + 1) < *first ? first
+    : is_sorted_until(first + 1, last);
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;
