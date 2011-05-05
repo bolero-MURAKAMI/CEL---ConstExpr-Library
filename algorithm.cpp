@@ -337,14 +337,28 @@ int main()
 
   // is_sorted_until
   {
-   constexpr auto test1 = is_sorted_until(a, a);
-   assert(test1 == a);
-   constexpr auto test2 = is_sorted_until(a, a + 1);
-   assert(test2 == a + 1);
-   constexpr auto test3 = is_sorted_until(b, b + 2);
-   assert(test3 == b + 2);
-   constexpr auto test4 = is_sorted_until(e, e + 8);
-   assert(test4 == e + 6);
+   {
+    constexpr auto test1 = is_sorted_until(a, a);
+    assert(test1 == a);
+    constexpr auto test2 = is_sorted_until(a, a + 1);
+    assert(test2 == a + 1);
+    constexpr auto test3 = is_sorted_until(b, b + 2);
+    assert(test3 == b + 2);
+    constexpr auto test4 = is_sorted_until(e, e + 8);
+    assert(test4 == e + 6);
+   }
+   {
+    struct less{constexpr bool operator()(int a, int b)const{return a < b;}};
+    constexpr auto comp = less();
+    constexpr auto test1 = is_sorted_until(a, a, less());
+    assert(test1 == a);
+    constexpr auto test2 = is_sorted_until(a, a + 1, less());
+    assert(test2 == a + 1);
+    constexpr auto test3 = is_sorted_until(b, b + 2, comp);
+    assert(test3 == b + 2);
+    constexpr auto test4 = is_sorted_until(e, e + 8, comp);
+    assert(test4 == e + 6);
+   }
   }
  }
 

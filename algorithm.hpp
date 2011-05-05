@@ -242,6 +242,14 @@ namespace sscrisk{ namespace cel{
     : is_sorted_until(first + 1, last);
   }
 
+  template<class Iterator, class Compare>
+  constexpr Iterator is_sorted_until(Iterator first, Iterator last, Compare comp)
+  {
+   return first == last || first + 1 == last ? last
+    : comp(*(first + 1), *first) != false? first
+    : is_sorted_until(first + 1, last);
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;
