@@ -238,7 +238,7 @@ namespace sscrisk{ namespace cel{
   constexpr Iterator is_sorted_until(Iterator first, Iterator last)
   {
    return first == last || first + 1 == last ? last
-    : *(first + 1) < *first ? first
+    : *(first + 1) < *first ? first + 1
     : is_sorted_until(first + 1, last);
   }
 
@@ -246,7 +246,7 @@ namespace sscrisk{ namespace cel{
   constexpr Iterator is_sorted_until(Iterator first, Iterator last, Compare comp)
   {
    return first == last || first + 1 == last ? last
-    : comp(*(first + 1), *first) != false? first
+    : comp(*(first + 1), *first) != false ? first + 1
     : is_sorted_until(first + 1, last);
   }
 

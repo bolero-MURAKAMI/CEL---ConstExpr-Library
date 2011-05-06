@@ -345,7 +345,7 @@ int main()
     constexpr auto test3 = is_sorted_until(b, b + 2);
     assert(test3 == b + 2);
     constexpr auto test4 = is_sorted_until(e, e + 8);
-    assert(test4 == e + 6);
+    assert(test4 == e + 7);
    }
    {
     struct less{constexpr bool operator()(int a, int b)const{return a < b;}};
@@ -357,7 +357,7 @@ int main()
     constexpr auto test3 = is_sorted_until(b, b + 2, comp);
     assert(test3 == b + 2);
     constexpr auto test4 = is_sorted_until(e, e + 8, comp);
-    assert(test4 == e + 6);
+    assert(test4 == e + 7);
    }
   }
  }
