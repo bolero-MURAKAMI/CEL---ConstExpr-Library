@@ -335,6 +335,36 @@ int main()
    }
   }
 
+  // is_sorted
+  {
+   {
+    constexpr bool test1 = is_sorted(a, a);
+    assert(test1 == true);
+    constexpr bool test2 = is_sorted(a, a + 1);
+    assert(test2 == true);
+    constexpr bool test3 = is_sorted(b, b + 2);
+    assert(test3 == true);
+    constexpr bool test4 = is_sorted(e, e + 7);
+    assert(test4 == true);
+    constexpr bool test5 = is_sorted(e, e + 8);
+    assert(test5 == false);
+   }
+   {
+    struct less{constexpr bool operator()(int a, int b)const{return a < b;}};
+    constexpr auto comp = less();
+    constexpr bool test1 = is_sorted(a, a, comp);
+    assert(test1 == true);
+    constexpr bool test2 = is_sorted(a, a + 1, comp);
+    assert(test2 == true);
+    constexpr bool test3 = is_sorted(b, b + 2, comp);
+    assert(test3 == true);
+    constexpr bool test4 = is_sorted(e, e + 7, comp);
+    assert(test4 == true);
+    constexpr bool test5 = is_sorted(e, e + 8, comp);
+    assert(test5 == false);
+   }
+  }
+
   // is_sorted_until
   {
    {

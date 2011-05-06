@@ -235,6 +235,18 @@ namespace sscrisk{ namespace cel{
 
   // 25.4.1.5 is_sorted
   template<class Iterator>
+  constexpr bool is_sorted(Iterator first, Iterator last)
+  {
+   return is_sorted_until(first, last) == last;
+  }
+
+  template<class Iterator, class Compare>
+  constexpr bool is_sorted(Iterator first, Iterator last, Compare comp)
+  {
+   return is_sorted_until(first, last, comp) == last;
+  }
+
+  template<class Iterator>
   constexpr Iterator is_sorted_until(Iterator first, Iterator last)
   {
    return first == last || first + 1 == last ? last
@@ -277,7 +289,7 @@ namespace sscrisk{ namespace cel{
    {
     return array + N;
    }
-
+ 
    template<class Array>
    struct array_to_const_ptr
    {
