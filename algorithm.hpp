@@ -263,15 +263,24 @@ namespace sscrisk{ namespace cel{
   }
 
   template<class Iterator, class T>
-  constexpr Iterator lower_bound(Iterator first, Iterator last, const T& value)
+  constexpr Iterator lower_bound(Iterator first, Iterator last, T const & value)
   {
    return first == last ? last
-    : *(first + distance(first, last) / 2) < value ? lower_bound(first + distance(first, last) / 2, last, value)
-    : lower_bound(first, first + distance(first, last) / 2, value);
+    : first + 1 == last ? *first < value ? last : first
+    : *(first + distance(first, last) / 2) < value
+       ? lower_bound(first + distance(first, last) / 2, last, value)
+       : lower_bound(first, first + distance(first, last) / 2, value);
   }
 
   template<class Iterator, class T, class Compare>
-  constexpr Iterator lower_bound(Iterator first, Iterator last, const T& value, Compare comp);
+  constexpr Iterator lower_bound(Iterator first, Iterator last, const T& value, Compare comp)
+  {
+   return first == last ? last
+    : first + 1 == last ? *first < value ? last : first
+    : *(first + distance(first, last) / 2) < value
+       ? lower_bound(first + distance(first, last) / 2, last, value, comp)
+       : lower_bound(first, first + distance(first, last) / 2, value, comp);
+  }
 
   namespace range{
 

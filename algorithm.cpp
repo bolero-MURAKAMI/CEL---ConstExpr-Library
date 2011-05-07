@@ -393,18 +393,35 @@ int main()
 
   // lower_bound
   {
-   constexpr auto test1 = lower_bound(a, a, 0);
-   assert(test1 == a);
-   constexpr auto test2 = lower_bound(a, a + 1, 0);
-   assert(test2 == a);
-   constexpr auto test3 = lower_bound(a, a + 1, 1);
-   assert(test3 == a + 1);
-   constexpr auto test4 = lower_bound(e, e + 7, 3);
-   assert(test4 == e + 3);
-   constexpr auto test5 = lower_bound(e, e + 7, 4);
-   assert(test5 == e + 5);
-   constexpr auto test6 = lower_bound(e, e + 7, 2);
-   assert(test6 == e + 2);
+   {
+    constexpr auto test1 = lower_bound(a, a, 0);
+    assert(test1 == a);
+    constexpr auto test2 = lower_bound(a, a + 1, 0);
+    assert(test2 == a);
+    constexpr auto test3 = lower_bound(a, a + 1, 1);
+    assert(test3 == a + 1);
+    constexpr auto test4 = lower_bound(e, e + 7, 3);
+    assert(test4 == e + 3);
+    constexpr auto test5 = lower_bound(e, e + 7, 4);
+    assert(test5 == e + 5);
+    constexpr auto test6 = lower_bound(e, e + 7, 2);
+    assert(test6 == e + 2);
+   }
+   {
+    constexpr auto comp = less<int>();
+    constexpr auto test1 = lower_bound(a, a, 0, comp);
+    assert(test1 == a);
+    constexpr auto test2 = lower_bound(a, a + 1, 0, comp);
+    assert(test2 == a);
+    constexpr auto test3 = lower_bound(a, a + 1, 1, comp);
+    assert(test3 == a + 1);
+    constexpr auto test4 = lower_bound(e, e + 7, 3, comp);
+    assert(test4 == e + 3);
+    constexpr auto test5 = lower_bound(e, e + 7, 4, comp);
+    assert(test5 == e + 5);
+    constexpr auto test6 = lower_bound(e, e + 7, 2, comp);
+    assert(test6 == e + 2);
+   }
   }
  }
 
