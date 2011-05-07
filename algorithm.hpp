@@ -262,6 +262,17 @@ namespace sscrisk{ namespace cel{
     : is_sorted_until(first + 1, last);
   }
 
+  template<class Iterator, class T>
+  constexpr Iterator lower_bound(Iterator first, Iterator last, const T& value)
+  {
+   return first == last ? last
+    : *(first + distance(first, last) / 2) < value ? lower_bound(first + distance(first, last) / 2, last, value)
+    : lower_bound(first, first + distance(first, last) / 2, value);
+  }
+
+  template<class Iterator, class T, class Compare>
+  constexpr Iterator lower_bound(Iterator first, Iterator last, const T& value, Compare comp);
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;
