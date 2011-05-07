@@ -17,10 +17,55 @@
 namespace sscrisk{ namespace cel{
 
   // 20.8.5, comparisons:
-  template <class T>
+  template<class T>
   struct equal_to
   {
-   constexpr bool operator()(const T& x, const T& y)const{ return x == y; }
+   constexpr bool operator()(T const & x, T const & y)const{ return x == y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef bool result_type;
+  };
+
+  template<class T>
+  struct not_equal_to
+  {
+   constexpr bool operator()(T const & x, T const & y)const{ return x != y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef bool result_type;
+  };
+
+  template<class T>
+  struct greater
+  {
+   constexpr bool operator()(T const & x, T const & y)const{ return x > y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef bool result_type;
+  };
+
+  template<class T>
+  struct less
+  {
+   constexpr bool operator()(T const & x, T const & y)const{ return x < y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef bool result_type;
+  };
+
+  template<class T>
+  struct greater_equal
+  {
+   constexpr bool operator()(T const & x, T const & y)const{ return x >= y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef bool result_type;
+  };
+
+  template<class T>
+  struct less_equal
+  {
+   constexpr bool operator()(T const & x, T const & y)const{ return x <= y; }
    typedef T first_argument_type;
    typedef T second_argument_type;
    typedef bool result_type;
@@ -43,34 +88,9 @@ namespace sscrisk{ namespace cel{
   };
 
   template <class Fn, class T>
-  constexpr binder2nd<Fn> bind2nd(const Fn& op, const T& x)
+  constexpr binder2nd<Fn> bind2nd(const Fn& op, T const & x)
   {
    return binder2nd<Fn>(op, typename Fn::second_argument_type(x));
-  }
-
-  namespace experimental{
-
-  template<class Fn>
-  class binder2nd
-  {
-   Fn op;
-   typename Fn::second_argument_type value;
-  public:
-   constexpr binder2nd(const Fn& x, const typename Fn::second_argument_type& y)
-    : op(x), value(y)
-   {}
-   constexpr typename Fn::result_type operator()(const typename Fn::first_argument_type& x)const
-   {
-    return op(x, value);
-   }
-  };
-
-  template <class Fn, class T>
-  constexpr binder2nd<Fn> bind2nd(const Fn& op, const T& x)
-  {
-   return binder2nd<Fn>(op, typename Fn::second_argument_type(x));
-  }
-
   }
 
 }}
