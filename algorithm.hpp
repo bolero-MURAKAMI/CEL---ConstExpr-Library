@@ -317,6 +317,31 @@ namespace sscrisk{ namespace cel{
    return {lower_bound(first, last, value, comp), upper_bound(first, last, value, comp)};
   }
 
+  // 25.4.3.4 binary_search
+  template<class Iterator, class T>
+  constexpr bool binary_search(Iterator first, Iterator last, const T& value)
+  {
+   return first == last ? false
+    : first + 1 == last ? !(*first < value) && !(value < *first) ? true : false
+    : *(first + distance(first, last) / 2) < value ?
+       binary_search(first + distance(first, last) / 2, last, value)
+    : value < *(first + distance(first, last)) / 2 ?
+       binary_search(first, first + distance(first, last) / 2, value)
+    : true;
+  }
+
+  template<class Iterator, class T, class Compare>
+  constexpr bool binary_search(Iterator first, Iterator last, const T& value, Compare comp)
+  {
+   return first == last ? false
+    : first + 1 == last ? !comp(*first, value) && !comp(value, *first) ? true : false
+    : comp(*(first + distance(first, last) / 2), value) ?
+       binary_search(first + distance(first, last) / 2, last, value)
+    : comp(value, *(first + distance(first, last)) / 2) ?
+       binary_search(first, first + distance(first, last) / 2, value)
+    : true;
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;

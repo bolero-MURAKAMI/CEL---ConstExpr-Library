@@ -489,6 +489,63 @@ int main()
     assert(test4.second == e + 5);
    }
   }
+
+  // binary_search
+  {
+   {
+    constexpr bool test1 = binary_search(a, a, 0);
+    assert(test1 == false);
+    constexpr bool test2 = binary_search(a, a + 1, 0);
+    assert(test2 == true);
+    constexpr bool test3 = binary_search(a, a + 1, 1);
+    assert(test3 == false);
+    constexpr bool test4 = binary_search(a, a + 1, -1);
+    assert(test4 == false);
+    constexpr bool test5 = binary_search(e, e + 7, 0);
+    assert(test5 == true);
+    constexpr bool test6 = binary_search(e, e + 7, 1);
+    assert(test6 == true);
+    constexpr bool test7 = binary_search(e, e + 7, 2);
+    assert(test7 == true);
+    constexpr bool test8 = binary_search(e, e + 7, 3);
+    assert(test8 == true);
+    constexpr bool test9 = binary_search(e, e + 7, 4);
+    assert(test9 == true);
+    constexpr bool test10 = binary_search(e, e + 7, 5);
+    assert(test10 == true);
+    constexpr bool test11 = binary_search(e, e + 7, -1);
+    assert(test11 == false);
+    constexpr bool test12 = binary_search(e, e + 7, 6);
+    assert(test12 == false);
+   }
+   {
+    constexpr auto comp = less<int>();
+    constexpr bool test1 = binary_search(a, a, 0, comp);
+    assert(test1 == false);
+    constexpr bool test2 = binary_search(a, a + 1, 0, comp);
+    assert(test2 == true);
+    constexpr bool test3 = binary_search(a, a + 1, 1, comp);
+    assert(test3 == false);
+    constexpr bool test4 = binary_search(a, a + 1, -1, comp);
+    assert(test4 == false);
+    constexpr bool test5 = binary_search(e, e + 7, 0, comp);
+    assert(test5 == true);
+    constexpr bool test6 = binary_search(e, e + 7, 1, comp);
+    assert(test6 == true);
+    constexpr bool test7 = binary_search(e, e + 7, 2, comp);
+    assert(test7 == true);
+    constexpr bool test8 = binary_search(e, e + 7, 3, comp);
+    assert(test8 == true);
+    constexpr bool test9 = binary_search(e, e + 7, 4, comp);
+    assert(test9 == true);
+    constexpr bool test10 = binary_search(e, e + 7, 5, comp);
+    assert(test10 == true);
+    constexpr bool test11 = binary_search(e, e + 7, -1, comp);
+    assert(test11 == false);
+    constexpr bool test12 = binary_search(e, e + 7, 6, comp);
+    assert(test12 == false);
+   }
+  }
  }
 
  // range
