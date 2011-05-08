@@ -304,6 +304,19 @@ namespace sscrisk{ namespace cel{
        : upper_bound(first, first + distance(first, last) / 2, value, comp);
   }
 
+  // 25.4.3.3 equal_range
+  template<class Iterator, class T>
+  constexpr pair<Iterator, Iterator> equal_range(Iterator first, Iterator last, const T& value)
+  {
+   return {lower_bound(first, last, value), upper_bound(first, last, value)};
+  }
+
+  template<class Iterator, class T, class Compare>
+  constexpr pair<Iterator, Iterator> equal_range(Iterator first, Iterator last, const T& value, Compare comp)
+  {
+   return {lower_bound(first, last, value, comp), upper_bound(first, last, value, comp)};
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;

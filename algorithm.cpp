@@ -456,6 +456,39 @@ int main()
     assert(test6 == e + 3);
    }
   }
+
+  // equal_range
+  {
+   {
+    constexpr auto test1 = equal_range(a, a, 0);
+    assert(test1.first == a);
+    assert(test1.second == a);
+    constexpr auto test2 = equal_range(a, a + 1, 0);
+    assert(test2.first == a);
+    assert(test2.second == a + 1);
+    constexpr auto test3 = equal_range(a, a + 1, 1);
+    assert(test3.first == a + 1);
+    assert(test3.second == a + 1);
+    constexpr auto test4 = equal_range(e, e + 7, 3);
+    assert(test4.first == e + 3);
+    assert(test4.second == e + 5);
+   }
+   {
+    constexpr auto comp = less<int>();
+    constexpr auto test1 = equal_range(a, a, 0, comp);
+    assert(test1.first == a);
+    assert(test1.second == a);
+    constexpr auto test2 = equal_range(a, a + 1, 0, comp);
+    assert(test2.first == a);
+    assert(test2.second == a + 1);
+    constexpr auto test3 = equal_range(a, a + 1, 1, comp);
+    assert(test3.first == a + 1);
+    assert(test3.second == a + 1);
+    constexpr auto test4 = equal_range(e, e + 7, 3, comp);
+    assert(test4.first == e + 3);
+    assert(test4.second == e + 5);
+   }
+  }
  }
 
  // range
