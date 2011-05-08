@@ -277,8 +277,8 @@ namespace sscrisk{ namespace cel{
   constexpr Iterator lower_bound(Iterator first, Iterator last, const T& value, Compare comp)
   {
    return first == last ? last
-    : first + 1 == last ? *first < value ? last : first
-    : *(first + distance(first, last) / 2) < value
+    : first + 1 == last ? comp(*first, value) ? last : first
+    : comp(*(first + distance(first, last) / 2), value)
        ? lower_bound(first + distance(first, last) / 2, last, value, comp)
        : lower_bound(first, first + distance(first, last) / 2, value, comp);
   }
