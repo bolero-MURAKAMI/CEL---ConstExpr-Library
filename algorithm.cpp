@@ -546,6 +546,35 @@ int main()
     assert(test12 == false);
    }
   }
+
+  // includes
+  {
+   {
+    constexpr bool test1 = includes(a, a, a, a);
+    assert(test1 == true);
+    constexpr bool test2 = includes(a, a + 1, a, a);
+    assert(test2 == true);
+    constexpr bool test3 = includes(a, a, a, a + 1);
+    assert(test3 == false);
+    constexpr bool test4 = includes(a, a + 1, a, a + 1);
+    assert(test4 == true);
+    constexpr bool test5 = includes(e, e + 7, d, d + 4);
+    assert(test5 == true);
+   }
+   {
+    constexpr auto comp = less<int>();
+    constexpr bool test1 = includes(a, a, a, a, comp);
+    assert(test1 == true);
+    constexpr bool test2 = includes(a, a + 1, a, a, comp);
+    assert(test2 == true);
+    constexpr bool test3 = includes(a, a, a, a + 1, comp);
+    assert(test3 == false);
+    constexpr bool test4 = includes(a, a + 1, a, a + 1, comp);
+    assert(test4 == true);
+    constexpr bool test5 = includes(e, e + 7, d, d + 4, comp);
+    assert(test5 == true);
+   }
+  }
  }
 
  // range

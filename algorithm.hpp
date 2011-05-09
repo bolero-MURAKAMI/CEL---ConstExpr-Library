@@ -116,7 +116,7 @@ namespace sscrisk{ namespace cel{
   // 25.2.9 Count
   template<class Iterator, class T>
   constexpr typename std::iterator_traits<Iterator>::difference_type
-  count(Iterator first, Iterator last, const T& value)
+  count(Iterator first, Iterator last, T const & value)
   {
    return first == last ? 0 : (*first == value ? 1 : 0) + count(first + 1, last, value);
   }
@@ -216,7 +216,7 @@ namespace sscrisk{ namespace cel{
   }
 
   template<class Iterator, class Size, class T>
-  constexpr Iterator search_n(Iterator first, Iterator last, Size count, const T& value)
+  constexpr Iterator search_n(Iterator first, Iterator last, Size count, T const & value)
   {
    return first == last || count == 0 ? first
     : first + 1 == last && count > 1 ? last
@@ -225,7 +225,7 @@ namespace sscrisk{ namespace cel{
   }
 
   template<class Iterator, class Size, class T, class BinaryPredicate>
-  constexpr Iterator search_n(Iterator first, Iterator last, Size count, const T& value, BinaryPredicate pred)
+  constexpr Iterator search_n(Iterator first, Iterator last, Size count, T const & value, BinaryPredicate pred)
   {
    return first == last || count == 0 ? first
     : first + 1 == last && count > 1 ? last
@@ -274,7 +274,7 @@ namespace sscrisk{ namespace cel{
   }
 
   template<class Iterator, class T, class Compare>
-  constexpr Iterator lower_bound(Iterator first, Iterator last, const T& value, Compare comp)
+  constexpr Iterator lower_bound(Iterator first, Iterator last, T const & value, Compare comp)
   {
    return first == last ? last
     : first + 1 == last ? comp(*first, value) ? last : first
@@ -306,20 +306,20 @@ namespace sscrisk{ namespace cel{
 
   // 25.4.3.3 equal_range
   template<class Iterator, class T>
-  constexpr pair<Iterator, Iterator> equal_range(Iterator first, Iterator last, const T& value)
+  constexpr pair<Iterator, Iterator> equal_range(Iterator first, Iterator last, T const & value)
   {
    return {lower_bound(first, last, value), upper_bound(first, last, value)};
   }
 
   template<class Iterator, class T, class Compare>
-  constexpr pair<Iterator, Iterator> equal_range(Iterator first, Iterator last, const T& value, Compare comp)
+  constexpr pair<Iterator, Iterator> equal_range(Iterator first, Iterator last, T const & value, Compare comp)
   {
    return {lower_bound(first, last, value, comp), upper_bound(first, last, value, comp)};
   }
 
   // 25.4.3.4 binary_search
   template<class Iterator, class T>
-  constexpr bool binary_search(Iterator first, Iterator last, const T& value)
+  constexpr bool binary_search(Iterator first, Iterator last, T const & value)
   {
    return first == last ? false
     : first + 1 == last ? !(*first < value) && !(value < *first) ? true : false
@@ -331,7 +331,7 @@ namespace sscrisk{ namespace cel{
   }
 
   template<class Iterator, class T, class Compare>
-  constexpr bool binary_search(Iterator first, Iterator last, const T& value, Compare comp)
+  constexpr bool binary_search(Iterator first, Iterator last, T const & value, Compare comp)
   {
    return first == last ? false
     : first + 1 == last ? !comp(*first, value) && !comp(value, *first) ? true : false
@@ -340,6 +340,24 @@ namespace sscrisk{ namespace cel{
     : comp(value, *(first + distance(first, last)) / 2) ?
        binary_search(first, first + distance(first, last) / 2, value)
     : true;
+  }
+
+  template<class Iterator1, class Iterator2>
+  constexpr bool includes(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
+  {
+   return first2 == last2 ? true
+    : first1 == last1 ? false
+    : !(*first1 < *first2) && !(*first2 < *first1) ? includes(first1 + 1, last1, first2 + 1, last2)
+    : includes(first1 + 1, last1, first2, last2);
+  }
+
+  template<class Iterator1, class Iterator2, class Compare>
+  constexpr bool includes(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Compare comp)
+  {
+   return first2 == last2 ? true
+    : first1 == last1 ? false
+    : !comp(*first1, *first2) && !comp(*first2, *first1) ? includes(first1 + 1, last1, first2 + 1, last2)
+    : includes(first1 + 1, last1, first2, last2);
   }
 
   namespace range{
