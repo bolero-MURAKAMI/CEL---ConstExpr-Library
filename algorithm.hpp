@@ -374,6 +374,18 @@ namespace sscrisk{ namespace cel{
 
   // 25.4.6.5 is_heap
   template<class Iterator>
+  constexpr bool is_heap(Iterator first, Iterator last)
+  {
+   return is_heap_until(first, last) == last;
+  }
+
+  template<class Iterator, class Compare>
+  constexpr bool is_heap(Iterator first, Iterator last, Compare comp)
+  {
+   return is_heap_until(first, last, comp) == last;
+  }
+
+  template<class Iterator>
   constexpr Iterator is_heap_until(Iterator first, Iterator last)
   {
    return is_heap_until(first, last, less<decltype(*first)>());

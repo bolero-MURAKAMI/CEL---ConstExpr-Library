@@ -622,6 +622,57 @@ int main()
     assert(test8 == e + 7);
    }
   }
+
+  // is_heap
+  {
+   {
+    constexpr bool test1 = is_heap(a, a);
+    assert(test1 == true);
+    constexpr bool test2 = is_heap(a, a + 1);
+    assert(test2 == true);
+    constexpr bool test3 = is_heap(b, b + 2);
+    assert(test3 == true);
+    static constexpr int array1[2] = {1, 0};
+    constexpr bool test4 = is_heap(array1, array1 + 2);
+    assert(test4 == false);
+    constexpr bool test5 = is_heap(c, c + 3);
+    assert(test5 == true);
+    static constexpr int array2[3] = {0, 1, -1};
+    constexpr bool test6 = is_heap(array2, array2 + 3);
+    assert(test6 == false);
+    static constexpr int array3[3] = {0, -1, 1};
+    constexpr bool test7 = is_heap(array3, array3 + 3);
+    assert(test7 == false);
+    constexpr bool test8 = is_heap(e, e + 8);
+    assert(test8 == false);
+    constexpr bool test9 = is_heap(e, e + 7);
+    assert(test9 == true);
+   }
+   {
+    constexpr auto comp = less<int>();
+    constexpr bool test1 = is_heap(a, a, comp);
+    assert(test1 == true);
+    constexpr bool test2 = is_heap(a, a + 1, comp);
+    assert(test2 == true);
+    constexpr bool test3 = is_heap(b, b + 2, comp);
+    assert(test3 == true);
+    static constexpr int array1[2] = {1, 0};
+    constexpr bool test4 = is_heap(array1, array1 + 2, comp);
+    assert(test4 == false);
+    constexpr bool test5 = is_heap(c, c + 3, comp);
+    assert(test5 == true);
+    static constexpr int array2[3] = {0, 1, -1};
+    constexpr bool test6 = is_heap(array2, array2 + 3, comp);
+    assert(test6 == false);
+    static constexpr int array3[3] = {0, -1, 1};
+    constexpr bool test7 = is_heap(array3, array3 + 3, comp);
+    assert(test7 == false);
+    constexpr bool test8 = is_heap(e, e + 8, comp);
+    assert(test8 == false);
+    constexpr bool test9 = is_heap(e, e + 7, comp);
+    assert(test9 == true);
+   }
+  }
  }
 
  // range
