@@ -410,6 +410,30 @@ namespace sscrisk{ namespace cel{
    return comp(b, a) ? b : a;
   }
 
+  template<class T>
+  constexpr T const & max(T const & a, T const & b)
+  {
+   return max(a, b, less<T>());
+  }
+
+  template<class T, class Compare>
+  constexpr T const & max(T const & a, T const & b, Compare comp)
+  {
+   return comp(a, b) ? b : a;
+  }
+
+  template<class T>
+  constexpr pair<T, T> minmax(T const & a, T const & b)
+  {
+   return minmax(a, b, less<T>());
+  }
+
+  template<class T, class Compare>
+  constexpr pair<T, T> minmax(T const & a, T const & b, Compare comp)
+  {
+   return comp(b, a) ? pair<T, T>(b, a) : pair<T, T>(a, b);
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;
