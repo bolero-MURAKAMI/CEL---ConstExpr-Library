@@ -365,8 +365,7 @@ namespace sscrisk{ namespace cel{
    template<class Iterator, class Compare>
    constexpr Iterator is_heap_until_impl(Iterator first, Iterator last, Compare comp, std::size_t n)
    {
-    return first + n == last ? last
-     : comp(first[n], first[n / 2]) ? first + n
+    return first + n == last || comp(first[n], first[n / 2]) ? first + n
      : is_heap_until_impl(first, last, comp, n + 1);
    }
 
