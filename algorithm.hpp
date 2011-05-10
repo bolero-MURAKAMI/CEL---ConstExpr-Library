@@ -360,6 +360,31 @@ namespace sscrisk{ namespace cel{
     : includes(first1 + 1, last1, first2, last2);
   }
 
+  namespace detail{
+
+   template<class Iterator, class Compare>
+   constexpr Iterator is_heap_until_impl(Iterator first, Iterator last, Compare comp, std::size_t n)
+   {
+    return first + n == last ? last
+     : comp(first[n], first[n / 2]) ? first + n
+     : is_heap_until_impl(first, last, comp, n + 1);
+   }
+
+  }
+
+  // 25.4.6.5 is_heap
+  template<class Iterator>
+  constexpr Iterator is_heap_until(Iterator first, Iterator last)
+  {
+   return is_heap_until(first, last, less<decltype(*first)>());
+  }
+
+  template<class Iterator, class Compare>
+  constexpr Iterator is_heap_until(Iterator first, Iterator last, Compare comp)
+  {
+   return distance(first, last) < 2 ? last : detail::is_heap_until_impl(first, last, comp, 0);
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;

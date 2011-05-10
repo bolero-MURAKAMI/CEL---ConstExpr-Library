@@ -575,6 +575,53 @@ int main()
     assert(test5 == true);
    }
   }
+
+  // is_heap_until
+  {
+   {
+    constexpr auto test1 = is_heap_until(a, a);
+    assert(test1 == a);
+    constexpr auto test2 = is_heap_until(a, a + 1);
+    assert(test2 == a + 1);
+    constexpr auto test3 = is_heap_until(b, b + 2);
+    assert(test3 == b + 2);
+    static constexpr int array1[2] = {1, 0};
+    constexpr auto test4 = is_heap_until(array1, array1 + 2);
+    assert(test4 == array1 + 1);
+    constexpr auto test5 = is_heap_until(c, c + 3);
+    assert(test5 == c + 3);
+    static constexpr int array2[3] = {0, 1, -1};
+    constexpr auto test6 = is_heap_until(array2, array2 + 3);
+    assert(test6 == array2 + 2);
+    static constexpr int array3[3] = {0, -1, 1};
+    constexpr auto test7 = is_heap_until(array3, array3 + 3);
+    assert(test7 == array3 + 1);
+    constexpr auto test8 = is_heap_until(e, e + 8);
+    assert(test8 == e + 7);
+   }
+   {
+    constexpr auto comp = less<int>();
+    constexpr auto test1 = is_heap_until(a, a, comp);
+    assert(test1 == a);
+    constexpr auto test2 = is_heap_until(a, a + 1, comp);
+    assert(test2 == a + 1);
+    constexpr auto test3 = is_heap_until(b, b + 2, comp);
+    assert(test3 == b + 2);
+    static constexpr int array1[2] = {1, 0};
+    constexpr auto test4 = is_heap_until(array1, array1 + 2, comp);
+    assert(test4 == array1 + 1);
+    constexpr auto test5 = is_heap_until(c, c + 3, comp);
+    assert(test5 == c + 3);
+    static constexpr int array2[3] = {0, 1, -1};
+    constexpr auto test6 = is_heap_until(array2, array2 + 3, comp);
+    assert(test6 == array2 + 2);
+    static constexpr int array3[3] = {0, -1, 1};
+    constexpr auto test7 = is_heap_until(array3, array3 + 3, comp);
+    assert(test7 == array3 + 1);
+    constexpr auto test8 = is_heap_until(e, e + 8, comp);
+    assert(test8 == e + 7);
+   }
+  }
  }
 
  // range
