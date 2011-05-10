@@ -397,6 +397,19 @@ namespace sscrisk{ namespace cel{
    return distance(first, last) < 2 ? last : detail::is_heap_until_impl(first, last, comp, 0);
   }
 
+  // 25.4.7 Minimum and maximum
+  template<class T>
+  constexpr T const & min(T const & a, T const & b)
+  {
+   return min(a, b, less<T>());
+  }
+
+  template<class T, class Compare>
+  constexpr T const & min(T const & a, T const & b, Compare comp)
+  {
+   return comp(b, a) ? b : a;
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;

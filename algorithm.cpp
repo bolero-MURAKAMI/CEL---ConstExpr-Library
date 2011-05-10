@@ -673,6 +673,30 @@ int main()
     assert(test9 == true);
    }
   }
+
+  // min
+  {
+   {
+    constexpr int test1 = min(0, 0);
+    assert(test1 == 0);
+    constexpr int test2 = min(0, 1);
+    assert(test2 == 0);
+    constexpr int test3 = min(1, 0);
+    assert(test3 == 0);
+    struct test
+    {
+     int a, b;
+     constexpr test(int a, int b):a(a),b(b){}
+     constexpr bool operator<(test const & other){return a < other.a;}
+    };
+    constexpr test test4 = min(test(0, 0), test(0, 1));
+    assert(test4.b == 0);
+    constexpr test test5 = min(test(0, 0), test(1, 1));
+    assert(test5.b == 0);
+    constexpr test test6 = min(test(1, 0), test(0, 1));
+    assert(test6.b == 1);
+   }
+  }
  }
 
  // range
