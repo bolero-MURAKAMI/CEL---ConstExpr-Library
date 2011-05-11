@@ -438,17 +438,13 @@ namespace sscrisk{ namespace cel{
    template<class Iterator, class Compare>
    constexpr Iterator min_element_impl(Iterator first, Iterator last, Compare comp, Iterator min)
    {
-    return first == last ? min
-     : comp(*first, *min) ? min_element_impl(first + 1, last, comp, first)
-     : min_element_impl(first + 1, last, comp, min);
+    return first == last ? min : min_element_impl(first + 1, last, comp, comp(*first, *min) ? first : min);
    }
 
    template<class Iterator, class Compare>
    constexpr Iterator max_element_impl(Iterator first, Iterator last, Compare comp, Iterator max)
    {
-    return first == last ? max
-     : comp(*max, *first) ? max_element_impl(first + 1, last, comp, first)
-     : max_element_impl(first + 1, last, comp, max);
+    return first == last ? max : max_element_impl(first + 1, last, comp, comp(*max, *first) ? first : max);
    }
 
    template<class Iterator, class Compare>
@@ -457,8 +453,7 @@ namespace sscrisk{ namespace cel{
    {
     return first == last ? pair<Iterator, Iterator>(min, max)
      : comp(*first, *min) ? minmax_element_impl(first + 1, last, comp, first, max)
-     : comp(*first, *max) ? minmax_element_impl(first + 1, last, comp, min, max)
-     : minmax_element_impl(first + 1, last, comp, min, first);
+     : minmax_element_impl(first + 1, last, comp, min, comp(*first, *max) ? max : first);
    }
 
   }
