@@ -761,6 +761,26 @@ int main()
    constexpr auto test5 = max_element(array, array + 3);
    assert(test5->b == 0);
   }
+
+  // minmax_element
+  {
+   constexpr auto test1 = minmax_element(a, a);
+   assert(test1.first == a);
+   assert(test1.second == a);
+   constexpr auto test2 = minmax_element(a, a + 1);
+   assert(test2.first == a);
+   assert(test2.second == a);
+   constexpr auto test3 = minmax_element(b, b + 2);
+   assert(test3.first == b);
+   assert(test3.second == b + 1);
+   constexpr auto test4 = minmax_element(e, e + 8);
+   assert(test4.first == e);
+   assert(test4.second == e + 6);
+   static constexpr test array[3] = {test{0, 0}, test{0, 1}, test{0, 2}};
+   constexpr auto test5 = minmax_element(array, array + 3);
+   assert(test5.first->b == 0);
+   assert(test5.second->b == 2);
+  }
  }
 
  // range
