@@ -32,6 +32,12 @@ constexpr bool eq(int n, int m)
  return n == m;
 }
 
+struct test
+{
+ int a, b;
+};
+constexpr bool operator<(test const & lhs, test const & rhs){return lhs.a < rhs.a;}
+
 int main()
 {
  static constexpr int a[] = {0};
@@ -683,17 +689,11 @@ int main()
     assert(test2 == 0);
     constexpr int test3 = min(1, 0);
     assert(test3 == 0);
-    struct test
-    {
-     int a, b;
-     constexpr test(int a, int b):a(a),b(b){}
-     constexpr bool operator<(test const & other){return a < other.a;}
-    };
-    constexpr test test4 = min(test(0, 0), test(0, 1));
+    constexpr test test4 = min(test{0, 0}, test{0, 1});
     assert(test4.b == 0);
-    constexpr test test5 = min(test(0, 0), test(1, 1));
+    constexpr test test5 = min(test{0, 0}, test{1, 1});
     assert(test5.b == 0);
-    constexpr test test6 = min(test(1, 0), test(0, 1));
+    constexpr test test6 = min(test{1, 0}, test{0, 1});
     assert(test6.b == 1);
    }
   }
@@ -707,17 +707,11 @@ int main()
     assert(test2 == 1);
     constexpr int test3 = max(1, 0);
     assert(test3 == 1);
-    struct test
-    {
-     int a, b;
-     constexpr test(int a, int b):a(a),b(b){}
-     constexpr bool operator<(test const & other){return a < other.a;}
-    };
-    constexpr test test4 = max(test(0, 0), test(0, 1));
+    constexpr test test4 = max(test{0, 0}, test{0, 1});
     assert(test4.b == 0);
-    constexpr test test5 = max(test(0, 0), test(1, 1));
+    constexpr test test5 = max(test{0, 0}, test{1, 1});
     assert(test5.b == 1);
-    constexpr test test6 = max(test(1, 0), test(0, 1));
+    constexpr test test6 = max(test{1, 0}, test{0, 1});
     assert(test6.b == 0);
    }
   }
@@ -730,18 +724,42 @@ int main()
    assert(test2.first == 0 && test2.second == 1);
    constexpr auto test3 = minmax(1, 0);
    assert(test3.first == 0 && test3.second == 1);
-   struct test
-   {
-    int a, b;
-    constexpr test(int a, int b):a(a),b(b){}
-    constexpr bool operator<(test const & other){return a < other.a;}
-   };
-   constexpr auto test4 = minmax(test(0, 0), test(0, 1));
+   constexpr auto test4 = minmax(test{0, 0}, test{0, 1});
    assert(test4.first.b == 0 && test4.second.b == 1);
-   constexpr auto test5 = minmax(test(0, 0), test(1, 1));
+   constexpr auto test5 = minmax(test{0, 0}, test{1, 1});
    assert(test5.first.b == 0 && test5.second.b == 1);
-   constexpr auto test6 = minmax(test(1, 0), test(0, 1));
+   constexpr auto test6 = minmax(test{1, 0}, test{0, 1});
    assert(test6.first.b == 1 && test6.second.b == 0);
+  }
+
+  // min_element
+  {
+   constexpr auto test1 = min_element(a, a);
+   assert(test1 == a);
+   constexpr auto test2 = min_element(a, a + 1);
+   assert(test2 == a);
+   constexpr auto test3 = min_element(b, b + 2);
+   assert(test3 == b);
+   constexpr auto test4 = min_element(e + 6, e + 8);
+   assert(test4 == e + 7);
+   static constexpr test array[3] = {test{0, 0}, test{0, 1}, test{0, 2}};
+   constexpr auto test5 = min_element(array, array + 3);
+   assert(test5->b == 0);
+  }
+
+  // max_element
+  {
+   constexpr auto test1 = max_element(a, a);
+   assert(test1 == a);
+   constexpr auto test2 = max_element(a, a + 1);
+   assert(test2 == a);
+   constexpr auto test3 = max_element(b, b + 2);
+   assert(test3 == b + 1);
+   constexpr auto test4 = max_element(e + 6, e + 8);
+   assert(test4 == e + 6);
+   static constexpr test array[3] = {test{0, 0}, test{0, 1}, test{0, 2}};
+   constexpr auto test5 = max_element(array, array + 3);
+   assert(test5->b == 0);
   }
  }
 

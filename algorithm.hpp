@@ -433,6 +433,50 @@ namespace sscrisk{ namespace cel{
    return comp(b, a) ? pair<T, T>(b, a) : pair<T, T>(a, b);
   }
 
+  namespace detail{
+
+   template<class Iterator, class Compare>
+   constexpr Iterator min_element_impl(Iterator first, Iterator last, Compare comp, Iterator min)
+   {
+    return first == last ? min
+     : comp(*first, *min) ? min_element_impl(first + 1, last, comp, first)
+     : min_element_impl(first + 1, last, comp, min);
+   }
+
+   template<class Iterator, class Compare>
+   constexpr Iterator max_element_impl(Iterator first, Iterator last, Compare comp, Iterator max)
+   {
+    return first == last ? max
+     : comp(*max, *first) ? max_element_impl(first + 1, last, comp, first)
+     : max_element_impl(first + 1, last, comp, max);
+   }
+
+  }
+
+  template<class Iterator>
+  constexpr Iterator min_element(Iterator first, Iterator last)
+  {
+   return min_element(first, last, less<typename std::iterator_traits<Iterator>::value_type>());
+  }
+
+  template<class Iterator, class Compare>
+  constexpr Iterator min_element(Iterator first, Iterator last, Compare comp)
+  {
+   return detail::min_element_impl(first, last, comp, first);
+  }
+
+  template<class Iterator>
+  constexpr Iterator max_element(Iterator first, Iterator last)
+  {
+   return max_element(first, last, less<typename std::iterator_traits<Iterator>::value_type>());
+  }
+
+  template<class Iterator, class Compare>
+  constexpr Iterator max_element(Iterator first, Iterator last, Compare comp)
+  {
+   return detail::max_element_impl(first, last, comp, first);
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;
