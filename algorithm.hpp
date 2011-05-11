@@ -494,6 +494,22 @@ namespace sscrisk{ namespace cel{
    return detail::minmax_element_impl(first, last, comp, first, first);
   }
 
+  template<class Iterator1, class Iterator2>
+  constexpr bool lexicographical_compare(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
+  {
+   return lexicographical_compare(first1, last1, first2, last2, less<decltype(*first1 + *first2)>());
+  }
+
+  template<class Iterator1, class Iterator2, class Compare>
+  constexpr bool
+  lexicographical_compare(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Compare comp)
+  {
+   return first2 == last2 ? false
+    : first1 == last1 || comp(*first1, *first2) ? true
+    : comp(*first2, *first1) ? false
+    : lexicographical_compare(first1 + 1, last1, first2 + 1, last2, comp);
+  }
+
   namespace range{
 
    namespace cel = ::sscrisk::cel;

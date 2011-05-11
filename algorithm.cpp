@@ -781,6 +781,23 @@ int main()
    assert(test5.first->b == 0);
    assert(test5.second->b == 2);
   }
+
+  // lexicographical_compare
+  {
+   constexpr bool test1 = lexicographical_compare(a, a, b, b);
+   assert(test1 == false);
+   constexpr bool test2 = lexicographical_compare(a, a, b, b + 1);
+   assert(test2 == true);
+   constexpr bool test3 = lexicographical_compare(a, a + 1, b, b);
+   assert(test3 == false);
+   static constexpr char s[] = "abc", t[] = "abcd";
+   constexpr bool test4 = lexicographical_compare(s, s + 3, t, t + 3);
+   assert(test4 == false);
+   constexpr bool test5 = lexicographical_compare(s, s + 4, t, t + 5);
+   assert(test5 == true);
+   constexpr bool test6 = lexicographical_compare(s, s + 3, t, t + 2);
+   assert(test6 == false);
+  }
  }
 
  // range
