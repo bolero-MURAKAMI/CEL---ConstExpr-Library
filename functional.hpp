@@ -16,6 +16,60 @@
 
 namespace sscrisk{ namespace cel{
 
+  // 20.8.4 Arithmetic operations
+  template<class T>
+  struct plus
+  {
+   constexpr T operator()(T const & x, T const & y)const{ return x + y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef T result_type;
+  };
+
+  template<class T>
+  struct minus
+  {
+   constexpr T operator()(T const & x, T const & y)const{ return x - y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef T result_type;
+  };
+
+  template<class T>
+  struct multiplies
+  {
+   constexpr T operator()(T const & x, T const & y)const{ return x * y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef T result_type;
+  };
+
+  template<class T>
+  struct divides
+  {
+   constexpr T operator()(T const & x, T const & y)const{ return x / y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef T result_type;
+  };
+
+  template<class T>
+  struct modulus
+  {
+   constexpr T operator()(T const & x, T const & y)const{ return x % y; }
+   typedef T first_argument_type;
+   typedef T second_argument_type;
+   typedef T result_type;
+  };
+
+  template<class T>
+  struct negate
+  {
+   constexpr T operator()(T const & x)const{ return -x; }
+   typedef T argument_type;
+   typedef T result_type;
+  };
+
   // 20.8.5, comparisons:
   template<class T>
   struct equal_to
@@ -87,7 +141,7 @@ namespace sscrisk{ namespace cel{
    }
   };
 
-  template <class Fn, class T>
+  template<class Fn, class T>
   constexpr binder2nd<Fn> bind2nd(const Fn& op, T const & x)
   {
    return binder2nd<Fn>(op, typename Fn::second_argument_type(x));
