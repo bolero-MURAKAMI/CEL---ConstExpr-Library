@@ -70,7 +70,7 @@ namespace sscrisk{ namespace cel{
    typedef T result_type;
   };
 
-  // 20.8.5, comparisons:
+  // 20.8.5 Comparisons
   template<class T>
   struct equal_to
   {

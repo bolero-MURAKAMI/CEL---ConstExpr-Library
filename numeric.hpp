@@ -30,6 +30,24 @@ namespace sscrisk{ namespace cel{
    return first == last ? init : accumulate(first + 1, last, binary_op(init, *first), binary_op);
   }
 
+  // 26.7.3 Inner product
+  template<class Iterator1, class Iterator2, class T>
+  constexpr T inner_product(Iterator1 first1, Iterator1 last1, Iterator2 first2, T init)
+  {
+   return inner_product(first1, last1, first2, init,
+                        plus<typename std::iterator_traits<Iterator1>::value_type>(),
+                        multiplies<typename std::iterator_traits<Iterator1>::value_type>());
+  }
+
+  template<class Iterator1, class Iterator2, class T, class BinaryOperation1, class BinaryOperation2>
+  constexpr T inner_product(Iterator1 first1, Iterator1 last1, Iterator2 first2, T init,
+                            BinaryOperation1 binary_op1, BinaryOperation2 binary_op2)
+  {
+   return first1 == last1 ? init
+    : inner_product(first1 + 1, last1, first2 + 1, binary_op1(init, binary_op2(*first1, *first2)),
+                    binary_op1, binary_op2);
+  }
+
 }}
 
 #endif
