@@ -487,7 +487,7 @@ namespace sscrisk{ namespace cel{
     return range.begin();
    }
 
-   template<class T, size_t N>
+   template<class T, std::size_t N>
    constexpr T const * begin(T const (& array)[N])
    {
     return array;
@@ -499,7 +499,7 @@ namespace sscrisk{ namespace cel{
     return range.end();
    }
 
-   template<class T, size_t N>
+   template<class T, std::size_t N>
    constexpr T const * end(T const (& array)[N])
    {
     return array + N;
