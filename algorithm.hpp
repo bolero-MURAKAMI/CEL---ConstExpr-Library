@@ -61,25 +61,36 @@ namespace sscrisk{ namespace cel{
    return first == last || pred(*first) == false ? first : find_if_not(first + 1, last, pred);
   }
 
-  // 25.2.6 Find end
-  template<class Iterator1, class Iterator2>
-  constexpr Iterator1 find_end(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
-  {
-   return first1 == last1 || first2 == last2 ? last1
-    : search(first1, last1, first2, last2) == first1 && search(first1 + 1, last1, first2, last2) == last1
-       ? first1
-    : find_end(first1 + 1, last1, first2, last2);
+  namespace detail{
+
+   template<class Iterator1, class Iterator2>
+   struct iter_equal_to
+   {
+    constexpr bool operator()(typename std::iterator_traits<Iterator1>::value_type const & x,
+                              typename std::iterator_traits<Iterator2>::value_type const & y)const
+    {
+     return x == y;
+    }
+   };
+
   }
 
+  // 25.2.6 Find end
   template<class Iterator1, class Iterator2, class BinaryPredicate>
   constexpr Iterator1 find_end(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2,
                                BinaryPredicate pred)
   {
    return first1 == last1 || first2 == last2 ? last1
     : search(first1, last1, first2, last2, pred) == first1
-        && search(first1 + 1, last1, first2, last2, pred) == last1
+      && search(first1 + 1, last1, first2, last2, pred) == last1
        ? first1
-    : find_end(first1 + 1, last1, first2, last2);
+    : find_end(first1 + 1, last1, first2, last2, pred);
+  }
+
+  template<class Iterator1, class Iterator2>
+  constexpr Iterator1 find_end(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
+  {
+   return find_end(first1, last1, first2, last2, detail::iter_equal_to<Iterator1, Iterator2>());
   }
 
   // 25.2.7 Find first
