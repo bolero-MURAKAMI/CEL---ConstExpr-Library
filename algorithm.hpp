@@ -113,8 +113,7 @@ namespace sscrisk{ namespace cel{
   template<class Iterator>
   constexpr Iterator adjacent_find(Iterator first, Iterator last)
   {
-   return first == last || first + 1 == last ? last
-    : *first == *(first + 1) ? first : adjacent_find(first + 1, last);
+   return adjacent_find(first, last, equal_to<typename std::iterator_traits<Iterator>::value_type>());
   }
 
   template<class Iterator, class BinaryPredicate>
