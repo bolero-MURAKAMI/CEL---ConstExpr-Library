@@ -103,7 +103,7 @@ namespace sscrisk{ namespace cel{
 
   template<class Iterator1, class Iterator2, class BinaryPredicate>
   constexpr Iterator1 find_first_of(Iterator1 first1, Iterator1 last1,
-                                   Iterator2 first2, Iterator2 last2, BinaryPredicate pred)
+                                    Iterator2 first2, Iterator2 last2, BinaryPredicate pred)
   {
    return first1 == last1 || find_if(first2, last2, bind2nd(pred, *first1)) != last2
     ? first1 : find_first_of(first1 + 1, last1, first2, last2, pred);

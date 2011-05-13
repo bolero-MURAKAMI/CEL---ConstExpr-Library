@@ -125,6 +125,31 @@ namespace sscrisk{ namespace cel{
    typedef bool result_type;
   };
 
+  // D.9.1 Class template binder1st
+  template<class Fn>
+  class binder1st : public std::unary_function<typename Fn::second_argument_type, typename Fn::result_type>
+  {
+  protected:
+   Fn op;
+   typename Fn::first_argument_type value;
+  public:
+   constexpr binder1st(Fn const & x, typename Fn::first_argument_type const & y)
+    : op(x), value(y)
+   {}
+   constexpr typename Fn::result_type operator()(typename Fn::second_argument_type const & x)const
+   {
+    return op(value, x);
+   }
+  };
+
+  // D.9.2 bind1st
+  template<class Fn, class T>
+  constexpr binder1st<Fn> bind1st(Fn const & fn, T const & x)
+  {
+   return binder1st<Fn>(fn, typename Fn::first_argument_type(x));
+  }
+
+  // D.9.3 Class template binder2nd
   template<class Fn>
   class binder2nd : public std::unary_function<typename Fn::first_argument_type, typename Fn::result_type>
   {
@@ -132,17 +157,18 @@ namespace sscrisk{ namespace cel{
    Fn op;
    typename Fn::second_argument_type value;
   public:
-   constexpr binder2nd(const Fn& x, const typename Fn::second_argument_type& y)
+   constexpr binder2nd(Fn const & x, typename Fn::second_argument_type const & y)
     : op(x), value(y)
    {}
-   constexpr typename Fn::result_type operator()(const typename Fn::first_argument_type& x)const
+   constexpr typename Fn::result_type operator()(typename Fn::first_argument_type const & x)const
    {
     return op(x, value);
    }
   };
 
+  // D.9.4 bind2nd
   template<class Fn, class T>
-  constexpr binder2nd<Fn> bind2nd(const Fn& op, T const & x)
+  constexpr binder2nd<Fn> bind2nd(Fn const & op, T const & x)
   {
    return binder2nd<Fn>(op, typename Fn::second_argument_type(x));
   }

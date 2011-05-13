@@ -11,12 +11,28 @@ int main()
 {
  using namespace sscrisk::cel;
  {
-  constexpr auto test = equal_to<int>();
-  constexpr auto test1 = bind2nd(test, 3);
-  constexpr bool test2 = test1(3);
-  assert(test2 == true);
-  constexpr bool test3 = bind2nd(equal_to<int>(), 3)(3);
-  assert(test2 == test3);
+  constexpr auto arithmetic = plus<int>();
+  assert(arithmetic(7, 3) == 10);
+ }
+ {
+  constexpr auto arithmetic = minus<int>();
+  assert(arithmetic(7, 3) == 4);
+ }
+ {
+  constexpr auto arithmetic = multiplies<int>();
+  assert(arithmetic(7, 3) == 21);
+ }
+ {
+  constexpr auto arithmetic = divides<int>();
+  assert(arithmetic(7, 3) == 2);
+ }
+ {
+  constexpr auto arithmetic = modulus<int>();
+  assert(arithmetic(7, 3) == 1);
+ }
+ {
+  constexpr auto arithmetic = negate<int>();
+  assert(arithmetic(7) == -7);
  }
  {
   constexpr auto comp = equal_to<int>();
@@ -59,5 +75,21 @@ int main()
   assert(test == true);
   assert(comp(1, 0) == false);
   assert(comp(0, 1) == true);
+ }
+ {
+  constexpr auto binder = binder1st<modulus<int>>(modulus<int>(), 7);
+  assert(binder(3) == 1);
+ }
+ {
+  constexpr auto binder = bind1st(modulus<int>(), 7);
+  assert(binder(3) == 1);
+ }
+ {
+  constexpr auto binder = binder2nd<modulus<int>>(modulus<int>(), 7);
+  assert(binder(3) == 3);
+ }
+ {
+  constexpr auto binder = bind2nd(modulus<int>(), 7);
+  assert(binder(3) == 3);
  }
 }
