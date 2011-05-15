@@ -148,12 +148,6 @@ namespace sscrisk{ namespace cel{
    return {};
   }
 
-  template<class T>
-  constexpr list<T, 1> pop_front(list<T, 2> const & l)
-  {
-   return {l.next.value};
-  }
-
   template<class T, std::size_t N>
   constexpr list<T, N - 1> pop_front(list<T, N> const & l)
   {
