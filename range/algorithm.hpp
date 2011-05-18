@@ -233,6 +233,20 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {cel::search(begin(range1), end(range1), begin(range2), end(range2), pred), end(range1)};
    }
 
+   template<class Range, class Size, class T>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   search_n(Range const & range, Size count, T const & value)
+   {
+    return {cel::search_n(begin(range), end(range), count, value), end(range)};
+   }
+
+   template<class Range, class Size, class T, class BinaryPredicate>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   search_n(Range const & range, Size count, T const & value, BinaryPredicate pred)
+   {
+    return {cel::search_n(begin(range), end(range), count, value, pred), end(range)};
+   }
+
 }}}
 
 #endif

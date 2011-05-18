@@ -231,4 +231,10 @@ int main()
   constexpr auto test1 = search(b, a);
   assert(test1.begin() == b);
  }
+
+ // search_n
+ {
+  constexpr auto test1 = search_n(e, 2, 3);
+  assert(test1.begin() == e + 3);
+ }
 }
