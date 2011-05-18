@@ -218,6 +218,21 @@ namespace sscrisk{ namespace cel{ namespace range{
     return cel::is_permutation(begin(range1), end(range1), begin(range2), pred);
    }
 
+   // 25.2.13 Search
+   template<class Range1, class Range2>
+   constexpr range_container<typename array_to_const_ptr<Range1>::type>
+   search(Range1 const & range1, Range2 const & range2)
+   {
+    return {cel::search(begin(range1), end(range1), begin(range2), end(range2)), end(range1)};
+   }
+
+   template<class Range1, class Range2, class BinaryPredicate>
+   constexpr range_container<typename array_to_const_ptr<Range1>::type>
+   search(Range1 const & range1, Range2 const & range2, BinaryPredicate pred)
+   {
+    return {cel::search(begin(range1), end(range1), begin(range2), end(range2), pred), end(range1)};
+   }
+
 }}}
 
 #endif

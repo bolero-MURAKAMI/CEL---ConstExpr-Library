@@ -225,4 +225,10 @@ int main()
   constexpr bool test1 = is_permutation(a, a);
   assert(test1 == true);
  }
+
+ // search
+ {
+  constexpr auto test1 = search(b, a);
+  assert(test1.begin() == b);
+ }
 }
