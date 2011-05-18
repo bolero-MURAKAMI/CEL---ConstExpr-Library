@@ -117,10 +117,12 @@ namespace sscrisk{ namespace cel{ namespace range{
 
    // 25.2.6 Find end
    template<class Range1, class Range2>
-   constexpr int const *
+   constexpr range_container<
+    typename array_to_const_ptr<Range1>::type
+   >
    find_end(Range1 const & range1, Range2 const & range2)
    {
-    return cel::find_end(begin(range1), end(range1), begin(range2), end(range2));
+    return {cel::find_end(begin(range1), end(range1), begin(range2), end(range2)), end(range1)};
    }
 
    template<class Range1, class Range2, class BinaryPredicate>
@@ -129,7 +131,7 @@ namespace sscrisk{ namespace cel{ namespace range{
    >
    find_end(Range1 const & range1, Range2 const & range2, BinaryPredicate pred)
    {
-    return cel::find_end(begin(range1), end(range1), begin(range2), end(range2), pred);
+    return {cel::find_end(begin(range1), end(range1), begin(range2), end(range2), pred), end(range1)};
    }
 
    // 25.2.7 Find first
@@ -176,6 +178,20 @@ namespace sscrisk{ namespace cel{ namespace range{
     return cel::count_if(begin(range), end(range), pred);
    }
 
+   template<class Range1, class Range2>
+   constexpr pair<typename array_to_const_ptr<Range1>::type, typename array_to_const_ptr<Range2>::type>
+   mismatch(Range1 const & range1, Range2 const & range2)
+   {
+    return cel::mismatch(begin(range1), end(range1), begin(range2));
+   }
+
+   template<class Range1, class Range2, class BinaryPredicate>
+   constexpr pair<typename array_to_const_ptr<Range1>::type, typename array_to_const_ptr<Range2>::type>
+   mismatch(Range1 const & range1, Range2 const & range2, BinaryPredicate pred)
+   {
+    return cel::mismatch(begin(range1), end(range1), begin(range2), pred);
+   }
+
    // 25.2.11 Equal
    template<class Range1, class Range2>
    constexpr bool equal(Range1 const & range1, Range2 const & range2)
@@ -187,6 +203,19 @@ namespace sscrisk{ namespace cel{ namespace range{
    constexpr bool equal(Range1 const & range1, Range2 const & range2, BinaryPredicate pred)
    {
     return cel::equal(begin(range1), end(range1), begin(range2), pred);
+   }
+
+   // 25.2.12 Is permutation
+   template<class Range1, class Range2>
+   constexpr bool is_permutation(Range1 const & range1, Range2 const & range2)
+   {
+    return cel::is_permutation(begin(range1), end(range1), begin(range2));
+   }
+
+   template<class Range1, class Range2, class BinaryPredicate>
+   constexpr bool is_permutation(Range1 const & range1, Range2 const & range2, BinaryPredicate pred)
+   {
+    return cel::is_permutation(begin(range1), end(range1), begin(range2), pred);
    }
 
 }}}

@@ -141,7 +141,7 @@ int main()
  // find_end
  {
   constexpr auto test1 = find_end(e, a);
-  assert(test1 == e + 7);
+  assert(test1.begin() == e + 7);
  }
 
  // find_first_of
@@ -192,6 +192,13 @@ int main()
   assert(test5 == 5);
  }
 
+ // mismatch
+ {
+  constexpr auto test1 = mismatch(d, e);
+  assert(test1.first == d + 4);
+  assert(test1.second == e + 4);
+ }
+
  // equal
  {
   {
@@ -211,5 +218,11 @@ int main()
    constexpr bool test4 = equal(d, g, abs_equal);
    assert(test4);
   }
+ }
+
+ // is_permutation
+ {
+  constexpr bool test1 = is_permutation(a, a);
+  assert(test1 == true);
  }
 }
