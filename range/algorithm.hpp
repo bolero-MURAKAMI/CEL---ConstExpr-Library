@@ -302,6 +302,22 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {cel::upper_bound(begin(range), end(range), value, comp), end(range)};
    }
 
+   template<class Range, class T>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   equal_range(Range const & range, const T& value)
+   {
+    return {cel::equal_range(begin(range), end(range), value).first,
+            cel::equal_range(begin(range), end(range), value).second};
+   }
+
+   template<class Range, class T, class Compare>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   equal_range(Range const & range, const T& value, Compare comp)
+   {
+    return {cel::equal_range(begin(range), end(range), value, comp).first,
+            cel::equal_range(begin(range), end(range), value, comp).second};
+   }
+
 }}}
 
 #endif

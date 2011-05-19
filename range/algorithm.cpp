@@ -266,4 +266,11 @@ int main()
   assert(test1.begin() == d + 3);
   assert(test1.end() == d + 4);
  }
+
+ // equal_range
+ {
+  constexpr auto test1 = equal_range(d, 2);
+  assert(test1.begin() == d + 2);
+  assert(test1.end() == d + 3);
+ }
 }
