@@ -247,7 +247,7 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {cel::search_n(begin(range), end(range), count, value, pred), end(range)};
    }
 
-   // 25.4.1.5 is_sorted [is.sorted]
+   // 25.4.1.5 is_sorted
    template<class Range>
    constexpr bool is_sorted(Range const & range)
    {
@@ -274,6 +274,7 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {begin(range), cel::is_sorted_until(begin(range), end(range), comp)};
    }
 
+   // 25.4.3.1 lower_bound
    template<class Range, class T>
    constexpr range_container<typename array_to_const_ptr<Range>::type>
    lower_bound(Range const & range, const T& value)
@@ -288,6 +289,7 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {begin(range), cel::lower_bound(begin(range), end(range), value, comp)};
    }
 
+   // 25.4.3.2 upper_bound
    template<class Range, class T>
    constexpr range_container<typename array_to_const_ptr<Range>::type>
    upper_bound(Range const & range, const T& value)
@@ -302,6 +304,7 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {cel::upper_bound(begin(range), end(range), value, comp), end(range)};
    }
 
+   // 25.4.3.3 equal_range
    template<class Range, class T>
    constexpr range_container<typename array_to_const_ptr<Range>::type>
    equal_range(Range const & range, const T& value)
@@ -316,6 +319,19 @@ namespace sscrisk{ namespace cel{ namespace range{
    {
     return {cel::equal_range(begin(range), end(range), value, comp).first,
             cel::equal_range(begin(range), end(range), value, comp).second};
+   }
+
+   // 25.4.3.4 binary_search
+   template<class Range, class T>
+   constexpr bool binary_search(Range const & range, const T& value)
+   {
+    return cel::binary_search(begin(range), end(range), value);
+   }
+
+   template<class Range, class T, class Compare>
+   constexpr bool binary_search(Range const & range, const T& value, Compare comp)
+   {
+    return cel::binary_search(begin(range), end(range), value, comp);
    }
 
 }}}

@@ -273,4 +273,12 @@ int main()
   assert(test1.begin() == d + 2);
   assert(test1.end() == d + 3);
  }
+
+ // binary_search
+ {
+  constexpr bool test1 = binary_search(a, 0);
+  assert(test1 == true);
+  constexpr bool test2 = binary_search(a, 1);
+  assert(test2 == false);
+ }
 }
