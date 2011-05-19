@@ -274,6 +274,20 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {begin(range), cel::is_sorted_until(begin(range), end(range), comp)};
    }
 
+   template<class Range, class T>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   lower_bound(Range const & range, const T& value)
+   {
+    return {begin(range), cel::lower_bound(begin(range), end(range), value)};
+   }
+
+   template<class Range, class T, class Compare>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   lower_bound(Range const & range, const T& value, Compare comp)
+   {
+    return {begin(range), cel::lower_bound(begin(range), end(range), value, comp)};
+   }
+
 }}}
 
 #endif

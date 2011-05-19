@@ -252,4 +252,11 @@ int main()
   constexpr bool test2 = is_sorted(e);
   assert(test2 == false);
  }
+
+ // lower_bound
+ {
+  constexpr auto test1 = lower_bound(d, 3);
+  assert(test1.begin() == d);
+  assert(test1.end() == d + 3);
+ }
 }
