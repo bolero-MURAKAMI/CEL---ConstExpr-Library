@@ -347,6 +347,33 @@ namespace sscrisk{ namespace cel{ namespace range{
     return cel::includes(begin(range1), end(range1), begin(range2), end(range2), comp);
    }
 
+   // 25.4.6.5 is_heap
+   template<class Range>
+   constexpr bool is_heap(Range const & range)
+   {
+    return cel::is_heap(begin(range), end(range));
+   }
+
+   template<class Range, class Compare>
+   constexpr bool is_heap(Range const & range, Compare comp)
+   {
+    return cel::is_heap(begin(range), end(range), comp);
+   }
+
+   template<class Range>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   is_heap_until(Range const & range)
+   {
+    return {begin(range), cel::is_heap_until(begin(range), end(range))};
+   }
+
+   template<class Range, class Compare>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   is_heap_until(Range const & range, Compare comp)
+   {
+    return {begin(range), cel::is_heap_until(begin(range), end(range), comp)};
+   }
+
 }}}
 
 #endif

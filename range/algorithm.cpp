@@ -289,4 +289,22 @@ int main()
   constexpr bool test2 = includes(a, b);
   assert(test2 == false);
  }
+
+ // is_heap_until
+ {
+  constexpr auto test1 = is_heap_until(d);
+  assert(test1.begin() == d);
+  assert(test1.end() == d + 4);
+  constexpr auto test2 = is_heap_until(e);
+  assert(test2.begin() == e);
+  assert(test2.end() == e + 7);
+ }
+
+ // is_heap
+ {
+  constexpr bool test1 = is_heap(d);
+  assert(test1 == true);
+  constexpr bool test2 = is_heap(e);
+  assert(test2 == false);
+ }
 }
