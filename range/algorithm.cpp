@@ -259,4 +259,11 @@ int main()
   assert(test1.begin() == d);
   assert(test1.end() == d + 3);
  }
+
+ // upper_bound
+ {
+  constexpr auto test1 = upper_bound(d, 2);
+  assert(test1.begin() == d + 3);
+  assert(test1.end() == d + 4);
+ }
 }
