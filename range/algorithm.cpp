@@ -281,4 +281,12 @@ int main()
   constexpr bool test2 = binary_search(a, 1);
   assert(test2 == false);
  }
+
+ // includes
+ {
+  constexpr bool test1 = includes(b, a);
+  assert(test1 == true);
+  constexpr bool test2 = includes(a, b);
+  assert(test2 == false);
+ }
 }

@@ -334,6 +334,19 @@ namespace sscrisk{ namespace cel{ namespace range{
     return cel::binary_search(begin(range), end(range), value, comp);
    }
 
+   // 25.4.5.1 includes
+   template<class Range1, class Range2>
+   constexpr bool includes(Range1 const & range1, Range2 const & range2)
+   {
+    return cel::includes(begin(range1), end(range1), begin(range2), end(range2));
+   }
+
+   template<class Range1, class Range2, class Compare>
+   constexpr bool includes(Range1 const & range1, Range2 const & range2, Compare comp)
+   {
+    return cel::includes(begin(range1), end(range1), begin(range2), end(range2), comp);
+   }
+
 }}}
 
 #endif
