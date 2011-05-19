@@ -247,6 +247,33 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {cel::search_n(begin(range), end(range), count, value, pred), end(range)};
    }
 
+   // 25.4.1.5 is_sorted [is.sorted]
+   template<class Range>
+   constexpr bool is_sorted(Range const & range)
+   {
+    return cel::is_sorted(begin(range), end(range));
+   }
+
+   template<class Range, class Compare>
+   constexpr bool is_sorted(Range const & range, Compare comp)
+   {
+    return cel::is_sorted(begin(range), end(range), comp);
+   }
+
+   template<class Range>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   is_sorted_until(Range const & range)
+   {
+    return {begin(range), cel::is_sorted_until(begin(range), end(range))};
+   }
+
+   template<class Range, class Compare>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   is_sorted_until(Range const & range, Compare comp)
+   {
+    return {begin(range), cel::is_sorted_until(begin(range), end(range), comp)};
+   }
+
 }}}
 
 #endif

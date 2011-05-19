@@ -237,4 +237,19 @@ int main()
   constexpr auto test1 = search_n(e, 2, 3);
   assert(test1.begin() == e + 3);
  }
+
+ // is_sorted_until
+ {
+  constexpr auto test1 = is_sorted_until(e);
+  assert(test1.begin() == e);
+  assert(test1.end() == e + 7);
+ }
+
+ // is_sorted
+ {
+  constexpr bool test1 = is_sorted(a);
+  assert(test1 == true);
+  constexpr bool test2 = is_sorted(e);
+  assert(test2 == false);
+ }
 }
