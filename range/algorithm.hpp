@@ -403,6 +403,28 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {cel::max_element(begin(range), end(range), comp), end(range)};
    }
 
+   template<class Range>
+   constexpr pair<
+    range_container<typename array_to_const_ptr<Range>::type>,
+    range_container<typename array_to_const_ptr<Range>::type>
+   >
+   minmax_element(Range const & range)
+   {
+    return {{cel::minmax_element(begin(range), end(range)).first, end(range)},
+            {cel::minmax_element(begin(range), end(range)).second, end(range)}};
+   }
+
+   template<class Range, class Compare>
+   constexpr pair<
+    range_container<typename array_to_const_ptr<Range>::type>,
+    range_container<typename array_to_const_ptr<Range>::type>
+   >
+   minmax_element(Range const & range, Compare comp)
+   {
+    return {{cel::minmax_element(begin(range), end(range), comp).first, end(range)},
+            {cel::minmax_element(begin(range), end(range), comp).second, end(range)}};
+   }
+
 }}}
 
 #endif

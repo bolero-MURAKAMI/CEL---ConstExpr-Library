@@ -321,4 +321,13 @@ int main()
   assert(test1.begin() == e + 6);
   assert(test1.end() == e + 8);
  }
+
+ // minmax_element
+ {
+  constexpr auto test1 = minmax_element(e);
+  assert(test1.first.begin() == e);
+  assert(test1.first.end() == e + 8);
+  assert(test1.second.begin() == e + 6);
+  assert(test1.second.end() == e + 8);
+ }
 }
