@@ -374,6 +374,35 @@ namespace sscrisk{ namespace cel{ namespace range{
     return {begin(range), cel::is_heap_until(begin(range), end(range), comp)};
    }
 
+   // 25.4.7 Minimum and maximum
+   template<class Range>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   min_element(Range const & range)
+   {
+    return {cel::min_element(begin(range), end(range)), end(range)};
+   }
+
+   template<class Range, class Compare>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   min_element(Range const & range, Compare comp)
+   {
+    return {cel::min_element(begin(range), end(range), comp), end(range)};
+   }
+
+   template<class Range>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   max_element(Range const & range)
+   {
+    return {cel::max_element(begin(range), end(range)), end(range)};
+   }
+
+   template<class Range, class Compare>
+   constexpr range_container<typename array_to_const_ptr<Range>::type>
+   max_element(Range const & range, Compare comp)
+   {
+    return {cel::max_element(begin(range), end(range), comp), end(range)};
+   }
+
 }}}
 
 #endif

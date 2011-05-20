@@ -307,4 +307,18 @@ int main()
   constexpr bool test2 = is_heap(e);
   assert(test2 == false);
  }
+
+ // min_element
+ {
+  constexpr auto test1 = min_element(e);
+  assert(test1.begin() == e);
+  assert(test1.end() == e + 8);
+ }
+
+ // max_element
+ {
+  constexpr auto test1 = max_element(e);
+  assert(test1.begin() == e + 6);
+  assert(test1.end() == e + 8);
+ }
 }
