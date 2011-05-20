@@ -425,6 +425,19 @@ namespace sscrisk{ namespace cel{ namespace range{
             {cel::minmax_element(begin(range), end(range), comp).second, end(range)}};
    }
 
+   // 25.4.8 Lexicographical comparison
+   template<class Range1, class Range2>
+   constexpr bool lexicographical_compare(Range1 const & range1, Range2 const & range2)
+   {
+    return cel::lexicographical_compare(begin(range1), end(range1), begin(range2), end(range2));
+   }
+
+   template<class Range1, class Range2, class Compare>
+   constexpr bool lexicographical_compare(Range1 const & range1, Range2 const & range2, Compare comp)
+   {
+    return cel::lexicographical_compare(begin(range1), end(range1), begin(range2), end(range2), comp);
+   }
+
 }}}
 
 #endif

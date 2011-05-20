@@ -330,4 +330,10 @@ int main()
   assert(test1.second.begin() == e + 6);
   assert(test1.second.end() == e + 8);
  }
+
+ // lexicographical_compare
+ {
+  constexpr bool test1 = lexicographical_compare(a, b);
+  assert(test1 == true);
+ }
 }
