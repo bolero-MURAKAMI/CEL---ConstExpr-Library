@@ -505,6 +505,7 @@ namespace sscrisk{ namespace cel{
    return detail::minmax_element_impl(first, last, comp, first, first);
   }
 
+  // 25.4.8 Lexicographical comparison
   template<class Iterator1, class Iterator2>
   constexpr bool lexicographical_compare(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2)
   {
