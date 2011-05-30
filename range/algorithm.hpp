@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-// algorithm.hop
+// algorithm.hpp
 
 #include<sscrisk/cel/algorithm.hpp>
 
