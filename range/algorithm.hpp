@@ -60,10 +60,11 @@ namespace sscrisk{ namespace cel{ namespace range{
    public:
     constexpr range_container(Iterator first, Iterator last)
      : first(first), last(last)
-     {}
+    {}
     constexpr Iterator begin()const{ return first; }
     constexpr Iterator end()const{ return last; }
     constexpr bool empty()const{ return first == last; }
+    constexpr std::size_t size()const{ return distance(first, last); }
    };
 
    // 25.2.1 All of
