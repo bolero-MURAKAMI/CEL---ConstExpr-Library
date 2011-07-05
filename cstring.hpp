@@ -42,6 +42,13 @@ namespace sscrisk{ namespace cel{
      : *s1 == *s2 ? strcmp(s1 + 1, s2 + 1)
      : (unsigned char)*s1 - (unsigned char)*s2;
   }
+
+  // 7.21.4.3  strcoll 関数
+  constexpr int strcoll(const char *s1, const char *s2)
+  {
+   return strcmp(s1, s2);
+  }
+
 }}
 
 #endif

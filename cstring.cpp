@@ -53,4 +53,10 @@ int main()
   constexpr int test8 = strcmp("0", "00");
   assert(test8 < 0);
  }
+
+ // strcoll
+ {
+  constexpr int test = strcoll("", "");
+  assert(test == 0);
+ }
 }
