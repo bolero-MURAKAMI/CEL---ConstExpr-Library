@@ -67,4 +67,14 @@ int main()
   constexpr int test2 = strncmp("01234", "012345", 6);
   assert(test2 < 0);
  }
+
+ // memchr
+ {
+  static constexpr unsigned char a[]{0, 1, 2, 3, 4};
+  constexpr void const * p = memchr(a, 4, 5);
+  constexpr unsigned char c = *static_cast<unsigned char const *>(p);
+  assert(c == 4);
+  constexpr void const * q = memchr(a, 5, 5);
+  assert(q == nullptr);
+ }
 }
