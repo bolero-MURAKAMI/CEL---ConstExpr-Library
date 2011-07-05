@@ -59,4 +59,12 @@ int main()
   constexpr int test = strcoll("", "");
   assert(test == 0);
  }
+
+ // strncmp
+ {
+  constexpr int test1 = strncmp("01234", "012345", 5);
+  assert(test1 == 0);
+  constexpr int test2 = strncmp("01234", "012345", 6);
+  assert(test2 < 0);
+ }
 }

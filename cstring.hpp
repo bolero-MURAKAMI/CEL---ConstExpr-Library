@@ -36,17 +36,27 @@ namespace sscrisk{ namespace cel{
   // 7.21.4.2  strcmp 関数
   constexpr int strcmp(const char *s1, const char *s2)
   {
-    return !*s1 && !*s2 ? 0
-     : !*s1 ? -1
-     : !*s2 ? 1
-     : *s1 == *s2 ? strcmp(s1 + 1, s2 + 1)
-     : (unsigned char)*s1 - (unsigned char)*s2;
+   return !*s1 && !*s2 ? 0
+    : !*s1 ? -1
+    : !*s2 ? 1
+    : *s1 == *s2 ? strcmp(s1 + 1, s2 + 1)
+    : (unsigned char)*s1 - (unsigned char)*s2;
   }
 
   // 7.21.4.3  strcoll 関数
   constexpr int strcoll(const char *s1, const char *s2)
   {
    return strcmp(s1, s2);
+  }
+
+  // 7.21.4.4  strncmp 関数
+  constexpr int strncmp(const char *s1, const char *s2, std::size_t n)
+  {
+   return !n || (!*s1 && !*s2) ? 0
+    : !*s1 ? -1
+    : !*s2 ? 1
+    : *s1 == *s2 ? strncmp(s1 + 1, s2 + 1, n - 1)
+    : (unsigned char)*s1 - (unsigned char)*s2;
   }
 
 }}
