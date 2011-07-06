@@ -110,6 +110,7 @@ namespace sscrisk{ namespace cel{
    return detail::strcspn_impl(s1, s2, 0);
   }
 
+  // 7.21.5.4  strpbrk 関数
   inline constexpr const char* strpbrk(const char* s1, const char* s2)
   {
    return !*s1 ? nullptr
@@ -120,6 +121,19 @@ namespace sscrisk{ namespace cel{
   inline constexpr char* strpbrk(char* s1, const char* s2)
   {
    return const_cast<char*>(strpbrk(const_cast<char const *>(s1), s2));
+  }
+
+  // 7.21.5.5  strrchr 関数
+  inline constexpr const char* strrchr(const char* s, int c)
+  {
+   return *s == static_cast<char>(c) && (!*s || !strrchr(s + 1, c))? s
+    : !*s ? nullptr
+    : strrchr(s + 1, c);
+  }
+
+  inline constexpr char* strrchr(char* s, int c)
+  {
+   return const_cast<char*>(strrchr(const_cast<char const *>(s), c));
   }
 
 }}

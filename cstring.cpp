@@ -128,4 +128,19 @@ int main()
   assert(test6 != nullptr);
   assert(*test6 == '3');
  }
+
+ // strrchr
+ {
+  static constexpr char a[]{"0123232"};
+  constexpr char const * test1 = strrchr(a, '0');
+  assert(test1 == a + 0);
+  assert(*test1 == '0');
+  constexpr char const * test2 = strrchr(&a[0], '2'); // g++ 4.7.0 20110702 のバグよけ
+  assert(test2 == a + 6);
+  assert(*test2 == '2');
+  constexpr char const * test3 = strrchr(a, '6');
+  assert(test3 == nullptr);
+  char b[]{""};
+  assert(strrchr(b, '\0') == b);
+ }
 }
