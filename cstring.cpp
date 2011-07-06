@@ -143,4 +143,20 @@ int main()
   char b[]{""};
   assert(strrchr(b, '\0') == b);
  }
+
+ // strspn
+ {
+  constexpr std::size_t test1 = strspn("", "");
+  assert(test1 == 0);
+  constexpr std::size_t test2 = strspn("", "0");
+  assert(test2 == 0);
+  constexpr std::size_t test3 = strspn("0", "");
+  assert(test3 == 0);
+  constexpr std::size_t test4 = strspn("0", "0");
+  assert(test4 == 1);
+  constexpr std::size_t test5 = strspn("0123", &"210"[0]); // g++ 4.7.0 20110702 のバグよけ
+  assert(test5 == 3);
+  constexpr std::size_t test6 = strspn("0123", "123");
+  assert(test6 == 0);
+ }
 }

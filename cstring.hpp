@@ -12,6 +12,8 @@
 
 // string.hpp
 
+// ref: X 3010：2003 (ISO/IEC 9899：1999) 7.21
+
 #include<cstddef>
 
 namespace sscrisk{ namespace cel{
@@ -134,6 +136,22 @@ namespace sscrisk{ namespace cel{
   inline constexpr char* strrchr(char* s, int c)
   {
    return const_cast<char*>(strrchr(const_cast<char const *>(s), c));
+  }
+
+  namespace detail{
+
+   inline constexpr std::size_t strspn_impl(char const * s1, char const * s2, std::size_t n)
+   {
+    return !*s1 || !strchr(s2, *s1) ? n
+     : strspn_impl(s1 + 1, s2, n + 1);
+   }
+
+  }
+
+  // 7.21.5.6  strspn 関数
+  inline constexpr std::size_t strspn(const char *s1, const char *s2)
+  {
+   return detail::strspn_impl(s1, s2, 0);
   }
 
 }}
