@@ -110,6 +110,18 @@ namespace sscrisk{ namespace cel{
    return detail::strcspn_impl(s1, s2, 0);
   }
 
+  inline constexpr const char* strpbrk(const char* s1, const char* s2)
+  {
+   return !*s1 ? nullptr
+    : strchr(s2, *s1) ? s1
+    : strpbrk(s1 + 1, s2);
+  }
+
+  inline constexpr char* strpbrk(char* s1, const char* s2)
+  {
+   return const_cast<char*>(strpbrk(const_cast<char const *>(s1), s2));
+  }
+
 }}
 
 #endif

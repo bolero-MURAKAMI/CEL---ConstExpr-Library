@@ -110,4 +110,22 @@ int main()
   constexpr std::size_t test7 = strcspn("0123456789", "123456789");
   assert(test7 == 1);
  }
+
+ // strstrpbrk
+ {
+  constexpr char const * test1 = strpbrk("", "");
+  assert(test1 == nullptr);
+  constexpr char const * test2 = strpbrk("0", "");
+  assert(test2 == nullptr);
+  constexpr char const * test3 = strpbrk("", "0");
+  assert(test3 == nullptr);
+  constexpr char const * test4 = strpbrk("0", "0");
+  assert(test4 != nullptr);
+  assert(*test4 == '0');
+  constexpr char const * test5 = strpbrk("0", "1");
+  assert(test5 == nullptr);
+  constexpr char const * test6 = strpbrk("01234", &"6543"[0]); // g++ 4.7.0 20110702 のバグよけ
+  assert(test6 != nullptr);
+  assert(*test6 == '3');
+ }
 }
