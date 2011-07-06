@@ -18,7 +18,7 @@ namespace sscrisk{ namespace cel{
 
   namespace detail{
 
-   constexpr int memcmp_impl(unsigned char const * s1, unsigned char const * s2, std::size_t n)
+   inline constexpr int memcmp_impl(unsigned char const * s1, unsigned char const * s2, std::size_t n)
    {
     return !n ? 0
      : *s1 == *s2 ? memcmp_impl(s1 + 1, s2 + 1, n - 1)
@@ -28,13 +28,13 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.4.1  memcmp 関数
-  constexpr int memcmp(void const *s1, void const *s2, std::size_t n)
+  inline constexpr int memcmp(void const *s1, void const *s2, std::size_t n)
   {
    return detail::memcmp_impl((unsigned char const *)s1, (unsigned char const *)s2, n);
   }
 
   // 7.21.4.2  strcmp 関数
-  constexpr int strcmp(const char *s1, const char *s2)
+  inline constexpr int strcmp(const char *s1, const char *s2)
   {
    return !*s1 && !*s2 ? 0
     : !*s1 ? -1
@@ -44,13 +44,13 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.4.3  strcoll 関数
-  constexpr int strcoll(const char *s1, const char *s2)
+  inline constexpr int strcoll(const char *s1, const char *s2)
   {
    return strcmp(s1, s2);
   }
 
   // 7.21.4.4  strncmp 関数
-  constexpr int strncmp(const char *s1, const char *s2, std::size_t n)
+  inline constexpr int strncmp(const char *s1, const char *s2, std::size_t n)
   {
    return !n || (!*s1 && !*s2) ? 0
     : !*s1 ? -1
@@ -61,7 +61,7 @@ namespace sscrisk{ namespace cel{
 
   namespace detail{
 
-   constexpr void const * memchr_impl(unsigned char const * s, char c, std::size_t n)
+   inline constexpr void const * memchr_impl(unsigned char const * s, char c, std::size_t n)
    {
     return !n ? 0
      : *s == c ? s
@@ -71,12 +71,12 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.5.1  memchr 関数
-  constexpr void const * memchr(void const * s, int c, size_t n)
+  inline constexpr void const * memchr(void const * s, int c, size_t n)
   {
    return detail::memchr_impl(static_cast<unsigned char const *>(s), static_cast<unsigned char>(c), n);
   }
 
-  constexpr void* memchr(void* s, int c, size_t n)
+  inline constexpr void* memchr(void* s, int c, size_t n)
   {
    return const_cast<void*>(detail::memchr_impl(static_cast<unsigned char*>(s), static_cast<unsigned char>(c), n));
   }
