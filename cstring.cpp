@@ -6,7 +6,7 @@
 
 #include<cassert>
 #include<sscrisk/cel/cstring.hpp>
-
+#include<initializer_list>
 int main()
 {
  using namespace sscrisk::cel;
@@ -76,5 +76,20 @@ int main()
   assert(c == 4);
   constexpr void const * q = memchr(a, 5, 5);
   assert(q == nullptr);
+ }
+
+ // strchr
+ {
+  static constexpr char a[]{"01232"};
+  constexpr char const * test1 = strchr(a, '0');
+  assert(test1 == a + 0);
+  assert(*test1 == '0');
+  constexpr char const * test2 = strchr(a, '2');
+  assert(test2 == a + 2);
+  assert(*test2 == '2');
+  constexpr char const * test3 = strchr(a, '6');
+  assert(test3 == nullptr);
+  char b[]{""};
+  assert(strchr(b, '\0') == b);
  }
 }

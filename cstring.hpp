@@ -81,6 +81,19 @@ namespace sscrisk{ namespace cel{
    return const_cast<void*>(detail::memchr_impl(static_cast<unsigned char*>(s), static_cast<unsigned char>(c), n));
   }
 
+  // 7.21.5.2  strchr 関数
+  inline constexpr const char* strchr(const char* s, int c)
+  {
+   return *s == static_cast<char>(c) ? s
+    : !*s ? nullptr
+    : strchr(s + 1, c);
+  }
+
+  inline constexpr char* strchr(char* s, int c)
+  {
+   return const_cast<char*>(strchr(const_cast<char const *>(s), c));
+  }
+
 }}
 
 #endif
