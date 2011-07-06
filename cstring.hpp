@@ -94,6 +94,22 @@ namespace sscrisk{ namespace cel{
    return const_cast<char*>(strchr(const_cast<char const *>(s), c));
   }
 
+  namespace detail{
+
+   inline constexpr std::size_t strcspn_impl(char const * s1, char const * s2, std::size_t n)
+   {
+    return !*s1 || strchr(s2, *s1) ? n
+     : strcspn_impl(s1 + 1, s2, n + 1);
+   }
+
+  }
+
+  // 7.21.5.3  strcspn 関数
+  inline constexpr std::size_t strcspn(const char *s1, const char *s2)
+  {
+   return detail::strcspn_impl(s1, s2, 0);
+  }
+
 }}
 
 #endif

@@ -6,7 +6,7 @@
 
 #include<cassert>
 #include<sscrisk/cel/cstring.hpp>
-#include<initializer_list>
+
 int main()
 {
  using namespace sscrisk::cel;
@@ -91,5 +91,23 @@ int main()
   assert(test3 == nullptr);
   char b[]{""};
   assert(strchr(b, '\0') == b);
+ }
+
+ // strcspn
+ {
+  constexpr std::size_t test1 = strcspn("", "");
+  assert(test1 == 0);
+  constexpr std::size_t test2 = strcspn("", "0");
+  assert(test2 == 0);
+  constexpr std::size_t test3 = strcspn("0", "");
+  assert(test3 == 1);
+  constexpr std::size_t test4 = strcspn("0", "0");
+  assert(test4 == 0);
+  constexpr std::size_t test5 = strcspn("0123456789", &"975"[0]); // g++ 4.7.0 20110702 のバグよけ
+  assert(test5 == 5);
+  constexpr std::size_t test6 = strcspn("0123456789", "01234567");
+  assert(test6 == 0);
+  constexpr std::size_t test7 = strcspn("0123456789", "123456789");
+  assert(test7 == 1);
  }
 }
