@@ -31,35 +31,35 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.4.1  memcmp 関数
-  inline constexpr int memcmp(void const *s1, void const *s2, std::size_t n)
+  inline constexpr int memcmp(void const * s1, void const * s2, std::size_t n)
   {
-   return detail::memcmp_impl((unsigned char const *)s1, (unsigned char const *)s2, n);
+   return detail::memcmp_impl(static_cast<unsigned char const *>(s1), static_cast<unsigned char const *>(s2), n);
   }
 
   // 7.21.4.2  strcmp 関数
-  inline constexpr int strcmp(const char *s1, const char *s2)
+  inline constexpr int strcmp(char const * s1, char const * s2)
   {
    return !*s1 && !*s2 ? 0
     : !*s1 ? -1
     : !*s2 ? 1
     : *s1 == *s2 ? strcmp(s1 + 1, s2 + 1)
-    : (unsigned char)*s1 - (unsigned char)*s2;
+    : static_cast<unsigned char>(*s1) - static_cast<unsigned char>(*s2);
   }
 
   // 7.21.4.3  strcoll 関数
-  inline constexpr int strcoll(const char *s1, const char *s2)
+  inline constexpr int strcoll(char const * s1, char const * s2)
   {
    return strcmp(s1, s2);
   }
 
   // 7.21.4.4  strncmp 関数
-  inline constexpr int strncmp(const char *s1, const char *s2, std::size_t n)
+  inline constexpr int strncmp(char const * s1, char const * s2, std::size_t n)
   {
    return !n || (!*s1 && !*s2) ? 0
     : !*s1 ? -1
     : !*s2 ? 1
     : *s1 == *s2 ? strncmp(s1 + 1, s2 + 1, n - 1)
-    : (unsigned char)*s1 - (unsigned char)*s2;
+    : static_cast<unsigned char>(*s1) - static_cast<unsigned char>(*s2);
   }
 
   namespace detail{
@@ -85,7 +85,7 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.5.2  strchr 関数
-  inline constexpr const char* strchr(const char* s, int c)
+  inline constexpr char const * strchr(char const * s, int c)
   {
    return *s == static_cast<char>(c) ? s
     : !*s ? nullptr
@@ -108,26 +108,26 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.5.3  strcspn 関数
-  inline constexpr std::size_t strcspn(const char *s1, const char *s2)
+  inline constexpr std::size_t strcspn(char const * s1, char const * s2)
   {
    return detail::strcspn_impl(s1, s2, 0);
   }
 
   // 7.21.5.4  strpbrk 関数
-  inline constexpr const char* strpbrk(const char* s1, const char* s2)
+  inline constexpr char const * strpbrk(char const * s1, char const * s2)
   {
    return !*s1 ? nullptr
     : strchr(s2, *s1) ? s1
     : strpbrk(s1 + 1, s2);
   }
 
-  inline constexpr char* strpbrk(char* s1, const char* s2)
+  inline constexpr char* strpbrk(char* s1, char const * s2)
   {
    return const_cast<char*>(strpbrk(const_cast<char const *>(s1), s2));
   }
 
   // 7.21.5.5  strrchr 関数
-  inline constexpr const char* strrchr(const char* s, int c)
+  inline constexpr char const * strrchr(char const * s, int c)
   {
    return *s == static_cast<char>(c) && (!*s || !strrchr(s + 1, c))? s
     : !*s ? nullptr
@@ -150,13 +150,13 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.5.6  strspn 関数
-  inline constexpr std::size_t strspn(const char *s1, const char *s2)
+  inline constexpr std::size_t strspn(char const * s1, char const * s2)
   {
    return detail::strspn_impl(s1, s2, 0);
   }
 
   // 7.21.5.7  strstr 関数
-  inline constexpr const char* strstr(const char* s1, const char* s2)
+  inline constexpr char const * strstr(char const * s1, char const * s2)
   {
    return !*s2 ? s1
     : !*s1 ? nullptr
@@ -164,7 +164,7 @@ namespace sscrisk{ namespace cel{
     : strstr(s1 + 1, s2);
   }
 
-  inline constexpr char* strstr(char* s1, const char* s2)
+  inline constexpr char* strstr(char* s1, char const * s2)
   {
    return const_cast<char*>(strstr(const_cast<char const *>(s1), s2));
   }
@@ -179,7 +179,7 @@ namespace sscrisk{ namespace cel{
   }
 
   // 7.21.6.3  strlen 関数
-  inline constexpr std::size_t strlen(const char *s)
+  inline constexpr std::size_t strlen(char const * s)
   {
    return detail::strlen_impl(s, 0);
   }
