@@ -169,6 +169,21 @@ namespace sscrisk{ namespace cel{
    return const_cast<char*>(strstr(const_cast<char const *>(s1), s2));
   }
 
+  namespace detail{
+
+   inline constexpr std::size_t strlen_impl(char const * s, std::size_t n)
+   {
+    return !*s ? n : strlen_impl(s + 1, n + 1);
+   }
+
+  }
+
+  // 7.21.6.3  strlen 関数
+  inline constexpr std::size_t strlen(const char *s)
+  {
+   return detail::strlen_impl(s, 0);
+  }
+
 }}
 
 #endif

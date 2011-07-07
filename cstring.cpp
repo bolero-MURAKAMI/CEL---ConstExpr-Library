@@ -179,4 +179,20 @@ int main()
   char const * test6 = strstr(b, "012345");
   assert(test6 == b);
  }
+
+ // strlen
+ {
+  constexpr std::size_t test1 = strlen("");
+  assert(test1 == 0);
+  constexpr std::size_t test2 = strlen("1");
+  assert(test2 == 1);
+  constexpr std::size_t test3 = strlen("12");
+  assert(test3 == 2);
+  constexpr std::size_t test4 = strlen("123");
+  assert(test4 == 3);
+  constexpr std::size_t test5 = strlen("1234");
+  assert(test5 == 4);
+  constexpr std::size_t test6 = strlen("123\0ABC");
+  assert(test6 == 3);
+ }
 }
