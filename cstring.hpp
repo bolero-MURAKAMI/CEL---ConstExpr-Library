@@ -12,7 +12,8 @@
 
 // string.hpp
 
-// ref: X 3010：2003 (ISO/IEC 9899：1999) 7.21
+// ref: C   JISX3010：2003 (ISO/IEC 9899：1999) 7.21
+//      C++ ISO/IEC FDIS 14882 N3290 21.7
 
 #include<cstddef>
 
@@ -152,6 +153,20 @@ namespace sscrisk{ namespace cel{
   inline constexpr std::size_t strspn(const char *s1, const char *s2)
   {
    return detail::strspn_impl(s1, s2, 0);
+  }
+
+  // 7.21.5.7  strstr 関数
+  inline constexpr const char* strstr(const char* s1, const char* s2)
+  {
+   return !*s2 ? s1
+    : !*s1 ? nullptr
+    : *s1 == *s2 && strstr(s1 + 1, s2 + 1) ? s1
+    : strstr(s1 + 1, s2);
+  }
+
+  inline constexpr char* strstr(char* s1, const char* s2)
+  {
+   return const_cast<char*>(strstr(const_cast<char const *>(s1), s2));
   }
 
 }}

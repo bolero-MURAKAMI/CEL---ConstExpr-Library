@@ -159,4 +159,24 @@ int main()
   constexpr std::size_t test6 = strspn("0123", "123");
   assert(test6 == 0);
  }
+
+ // strstr
+ {
+  constexpr char const * test1 = strstr("", "");
+  assert(test1 != nullptr);
+  assert(*test1 == '\0');
+  constexpr char const * test2 = strstr("0", "");
+  assert(test2 != nullptr);
+  assert(*test2 == '0');
+  constexpr char const * test3 = strstr("", "0");
+  assert(test3 == nullptr);
+  constexpr char const * test4 = strstr(&"012301230123"[0], "301"); // g++ 4.7.0 20110702 のバグよけ
+  assert(test4 != nullptr);
+  assert(*test4 == '3');
+  constexpr char const * test5 = strstr("012301230123", "124");
+  assert(test5 == nullptr);
+  char b[]{"012345"};
+  char const * test6 = strstr(b, "012345");
+  assert(test6 == b);
+ }
 }
