@@ -13,35 +13,6 @@ constexpr bool is_less_than_2(int i){return i < 2;}
 int main()
 {
  using namespace sscrisk::cel;
-
- // begin
- {
-  static constexpr list<int, 1> v{9};
-  constexpr auto iter = begin(v);
-  assert(*iter == 9);
- }
-
- // end
- {
-  static constexpr list<int, 1> v{8};
-  constexpr auto iter1 = end(v);
-  constexpr auto iter2 = iter1 - 1;
-  assert(*iter2 == 8);
- }
-
- // size
- {
-  constexpr list<int, 0> v{};
-  constexpr auto test1 = size(v);
-  assert(test1 == 0);
-  constexpr list<int, 1> w{0};
-  constexpr auto test2 = size(w);
-  assert(test2 == 1);
-  constexpr list<int, 2> x{0, {1}};
-  constexpr auto test3 = size(x);
-  assert(test3 == 2);
- }
-
  // empty
  {
   constexpr list<int, 0> v{};
@@ -54,7 +25,30 @@ int main()
   constexpr bool test3 = empty(x);
   assert(test3 == false);
  }
-
+ // size
+ {
+  constexpr list<int, 0> v{};
+  constexpr auto test1 = size(v);
+  assert(test1 == 0);
+  constexpr list<int, 1> w{0};
+  constexpr auto test2 = size(w);
+  assert(test2 == 1);
+  constexpr list<int, 2> x{0, {1}};
+  constexpr auto test3 = size(x);
+  assert(test3 == 2);
+ }
+ // max_size
+ {
+  constexpr list<int, 0> v{};
+  constexpr auto test1 = max_size(v);
+  assert(test1 == 0);
+  constexpr list<int, 1> w{0};
+  constexpr auto test2 = max_size(w);
+  assert(test2 == 1);
+  constexpr list<int, 2> x{0, {1}};
+  constexpr auto test3 = max_size(x);
+  assert(test3 == 2);
+ }
  // front
  {
   constexpr list<int, 1> v{0};
@@ -64,7 +58,6 @@ int main()
   constexpr auto test2 = front(w);
   assert(test2 == 3);
  }
-
  // back
  {
   constexpr list<int, 1> v{0};
@@ -74,7 +67,42 @@ int main()
   constexpr auto test2 = back(w);
   assert(test2 == 1);
  }
-
+ // pop_front
+ {
+  constexpr list<int, 1> v{0};
+  constexpr auto test1 = pop_front(v);
+  assert(size(test1) == 0);
+  constexpr list<int, 2> w{0, {1}};
+  constexpr auto test2 = pop_front(w);
+  assert(size(test2) == 1);
+  constexpr list<int, 3> x{0, {1, {2}}};
+  constexpr auto test3 = pop_front(x);
+  assert(size(test3) == 2);
+ }
+ // push_front
+ {
+  constexpr list<int, 0> zero{};
+  constexpr auto one = push_front(zero, 10);
+  constexpr auto test1 = at(one, 0);
+  assert(test1 == 10);
+  constexpr auto two = push_front(one, 20);
+  constexpr auto test2 = at(two, 0);
+  assert(test2 == 20);
+  constexpr auto test3 = at(two, 1);
+  assert(test3 == 10);
+ }
+ // clear
+ {
+  constexpr list<int, 0> v{};
+  constexpr auto test1 = clear(v);
+  assert(empty(test1) == true);
+  constexpr list<int, 1> w{7};
+  constexpr auto test2 = clear(w);
+  assert(empty(test2) == true);
+  constexpr list<int, 2> x{3, {9}};
+  constexpr auto test3 = clear(x);
+  assert(empty(test3) == true);
+ }
  // at
  {
   {
@@ -92,46 +120,6 @@ int main()
    assert(test3 == 2);
   }
  }
-
- // clear
- {
-  constexpr list<int, 0> v{};
-  constexpr auto test1 = clear(v);
-  assert(empty(test1) == true);
-  constexpr list<int, 1> w{7};
-  constexpr auto test2 = clear(w);
-  assert(empty(test2) == true);
-  constexpr list<int, 2> x{3, {9}};
-  constexpr auto test3 = clear(x);
-  assert(empty(test3) == true);
- }
-
- // push_front
- {
-  constexpr list<int, 0> zero{};
-  constexpr auto one = push_front(zero, 10);
-  constexpr auto test1 = at(one, 0);
-  assert(test1 == 10);
-  constexpr auto two = push_front(one, 20);
-  constexpr auto test2 = at(two, 0);
-  assert(test2 == 20);
-  constexpr auto test3 = at(two, 1);
-  assert(test3 == 10);
- }
-
- // pop_front
- {
-  constexpr list<int, 1> v{0};
-  constexpr auto test1 = pop_front(v);
-  assert(size(test1) == 0);
-  constexpr list<int, 2> w{0, {1}};
-  constexpr auto test2 = pop_front(w);
-  assert(size(test2) == 1);
-  constexpr list<int, 3> x{0, {1, {2}}};
-  constexpr auto test3 = pop_front(x);
-  assert(size(test3) == 2);
- }
-
  // make_list
  {
   constexpr auto test1 = make_list<int>();
@@ -141,22 +129,23 @@ int main()
   constexpr auto test3 = make_list(0, 1, 42, 2);
   assert(size(test3) == 4);
  }
- 
- // list_iter
+ // algorithms
+ namespace a = sscrisk::cel::algorithm;
+ // transform
  {
-  static constexpr list<int, 3> v{0, {1, {2}}};
-  constexpr auto iter0 = begin(v);
-  assert(*iter0 == 0);
-  constexpr auto iter1 = iter0 + 1;
-  assert(*iter1 == 1);
-  constexpr auto iter2 = end(v);
-  constexpr auto iter3 = iter2 - 1;
-  assert(*iter3 == 2);
-  {
-   constexpr bool test1 = all_of(begin(v), end(v), is_less_than_2);
-   assert(test1 == false);
-   constexpr bool test2 = all_of(begin(v), end(v) - 1, is_less_than_2);
-   assert(test2 == true);
-  }
+  struct plus1{constexpr int operator()(int n){return n + 1;}};
+  constexpr auto test1 = a::transform(list<int, 0>(), plus1());
+  assert(sizeof(test1));
+  constexpr auto test2 = a::transform(list<int, 10>(), plus1());
+  assert(at(test2, 0) == 1);
+  assert(at(test2, 9) == 1);
+ }
+ // iota
+ {
+  constexpr auto test1 = a::iota(list<int, 256>(), 0);
+  constexpr auto test2 = at(test1, 0);
+  assert(test2 == 0);
+  constexpr auto test3 = at(test1, 255);
+  assert(test3 == 255);
  }
 }
