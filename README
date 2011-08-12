@@ -1,10 +1,28 @@
 CEL - ConstExpr Library
 
-C++0x の constexpr ベースのライブラリ。
+C++0x から追加された constexpr ベースのライブラリ。
+標準ライブラリを constexpr 化することを第一の目標とする。
+おおざっぱな実装だけどレンジにも対応してる。
+
 
 <algorithm> に対応するのが algorithm.hpp
-algorithm.hpp のテストが algorithm.cpp
-おおざっぱな実装だけどレンジにも対応してる。
+algorithm.hpp のテストが algorithm.cpp となっている。
+
+<標準ライブラリ> 対応するCEL テスト
+<algorithm> algorithm.hpp algorithm.cpp
+<array> array.hpp array.cpp
+<cctype> cctype.hpp cctype.cpp
+<cstring> cstring.hpp cstring.cpp
+<functional> functional.hpp functional.cpp
+<iterator> iterator.hpp
+<numeric> numeric.hpp numeric.hpp
+<utility> utility.hpp
+
+
+RiSK (sscrisk)
+Blog: http://d.hatena.ne.jp/RiSK/
+Twitter: http://twitter.com/sscrisk
+Mail: sscrisk@gmail.com
 
 
 このライブラリは Boost Software License の元で公開されています。
