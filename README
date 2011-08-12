@@ -5,8 +5,24 @@ C++0x から追加された constexpr ベースのライブラリ。
 おおざっぱな実装だけどレンジにも対応してる。
 
 
+使い方
+
+ディレクトリ構成を
+/path/to/sscrisk/cel/*
+のようにする。
+( /path/to はあなたの好きなディレクトリ、 * は algorithm.hpp, array.hpp などのCELファイル)
+次に /path/to へパスを通す。
+あなたのコード内で #include する。
+例： #include <sscrisk/cel/algorithm.hpp>
+
+
+ファイルの説明
+
 <algorithm> に対応するのが algorithm.hpp
 algorithm.hpp のテストが algorithm.cpp となっている。
+
+
+ファイル群
 
 <標準ライブラリ> 対応するCEL テスト
 <algorithm> algorithm.hpp algorithm.cpp
@@ -17,7 +33,10 @@ algorithm.hpp のテストが algorithm.cpp となっている。
 <iterator> iterator.hpp
 <numeric> numeric.hpp numeric.hpp
 <utility> utility.hpp
+<> range/algorithm.hpp range/algorithm.cpp
 
+
+作者
 
 RiSK (sscrisk)
 Blog: http://d.hatena.ne.jp/RiSK/
