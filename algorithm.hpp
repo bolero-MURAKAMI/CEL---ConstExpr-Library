@@ -75,6 +75,9 @@ struct iter_equal_to
 
 }
 
+template<class Iterator1, class Iterator2, class BinaryPredicate>
+constexpr Iterator1 search(Iterator1, Iterator1, Iterator2, Iterator2, BinaryPredicate);
+
 // 25.2.6 Find end
 template<class Iterator1, class Iterator2, class BinaryPredicate>
 constexpr Iterator1 find_end(Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2,
@@ -242,6 +245,11 @@ constexpr Iterator search_n(Iterator first, Iterator last, Size count, T const &
   : search_n(first + 1, last, count, value, pred);
 }
 
+template<class Iterator>
+constexpr Iterator is_sorted_until(Iterator, Iterator);
+template<class Iterator, class Compare>
+constexpr Iterator is_sorted_until(Iterator, Iterator, Compare);
+
 // 25.4.1.5 is_sorted
 template<class Iterator>
 constexpr bool is_sorted(Iterator first, Iterator last)
@@ -380,6 +388,11 @@ constexpr Iterator is_heap_until_impl(Iterator first, Iterator last, Compare com
 }
 
 }
+
+template<class Iterator>
+constexpr Iterator is_heap_until(Iterator, Iterator);
+// template<class Iterator, class Compare>
+// constexpr Iterator is_heap_until(Iterator, Iterator, Compare);
 
 // 25.4.6.5 is_heap
 template<class Iterator>
