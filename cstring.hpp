@@ -4,13 +4,13 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(SSCRISK_CEL_STRING_HPP)
-#define SSCRISK_CEL_STRING_HPP
+#if !defined(SSCRISK_CEL_CSTRING_HPP)
+#define SSCRISK_CEL_CSTRING_HPP
 #if defined(_MSC_VER) && _MSC_VER >= 1020
 #pragma once
 #endif
 
-// string.hpp
+// cstring.hpp
 
 // ref: C   JISX3010：2003 (ISO/IEC 9899：1999) 7.21
 //      C++ ISO/IEC FDIS 14882 N3290 21.7

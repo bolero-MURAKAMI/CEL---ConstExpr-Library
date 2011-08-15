@@ -12,7 +12,8 @@
 
 // cctype.hpp
 
-// ref: ISO/IEC 9899:1999
+// ref: C   JISX3010：2003 (ISO/IEC 9899：1999) 7.4
+//      C++ ISO/IEC FDIS 14882 N3290 21.7
 
 // Supported only ASCII.
 
