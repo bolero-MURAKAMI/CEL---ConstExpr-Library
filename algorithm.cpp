@@ -341,6 +341,20 @@ int main()
    }
   }
 
+  // is_partitioned
+  {
+   constexpr bool test1 = is_partitioned(a, a, is_less_than_2);
+   assert(test1 == true);
+   constexpr bool test2 = is_partitioned(a, a + 1, is_less_than_2);
+   assert(test2 == true);
+   constexpr bool test3 = is_partitioned(b, b + 2, is_less_than_2);
+   assert(test3 == true);
+   constexpr bool test4 = is_partitioned(c, c + 3, is_less_than_2);
+   assert(test4 == true);
+   constexpr bool test5 = is_partitioned(e, e + 8, is_less_than_2);
+   assert(test5 == false);
+  }
+  
   // is_sorted
   {
    {

@@ -245,6 +245,26 @@ constexpr Iterator search_n(Iterator first, Iterator last, Size count, T const &
   : search_n(first + 1, last, count, value, pred);
 }
 
+namespace detail {
+ 
+template<class Iterator, class Predicate>
+constexpr bool is_partitioned_impl(Iterator first, Iterator last, Predicate pred, bool cond = true)
+{
+ return first == last ? true
+ : cond ? is_partitioned_impl(first + 1, last, pred, pred(*first))
+ : pred(*first) ? false
+ : is_partitioned_impl(first + 1, last, pred, false);
+}
+ 
+}
+ 
+// 25.3.13 Partitions
+template<class Iterator, class Predicate>
+constexpr bool is_partitioned(Iterator first, Iterator last, Predicate pred)
+{
+ return detail::is_partitioned_impl(first, last, pred);
+}
+
 template<class Iterator>
 constexpr Iterator is_sorted_until(Iterator, Iterator);
 template<class Iterator, class Compare>
