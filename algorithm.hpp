@@ -255,14 +255,28 @@ constexpr bool is_partitioned_impl(Iterator first, Iterator last, Predicate pred
  : pred(*first) ? false
  : is_partitioned_impl(first + 1, last, pred, false);
 }
- 
+
+template<class Iterator, class Predicate>
+constexpr Iterator partition_point_impl(Iterator first, Iterator last, Predicate pred, Iterator mid)
+{
+ return mid == last ? mid
+  : pred(*mid) ? partition_point_impl(mid + 1, last, pred, mid + 1 + distance(mid + 1, last) / 2)
+  : partition_point_impl(first, mid, pred, first + distance(first, mid) / 2);
 }
- 
+
+}
+
 // 25.3.13 Partitions
 template<class Iterator, class Predicate>
 constexpr bool is_partitioned(Iterator first, Iterator last, Predicate pred)
 {
  return detail::is_partitioned_impl(first, last, pred);
+}
+
+template<class Iterator, class Predicate>
+constexpr Iterator partition_point(Iterator first, Iterator last, Predicate pred)
+{
+ return detail::partition_point_impl(first, last, pred, first + distance(first, last) / 2);
 }
 
 template<class Iterator>

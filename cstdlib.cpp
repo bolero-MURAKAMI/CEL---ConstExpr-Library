@@ -22,7 +22,7 @@ void abs_test()
   constexpr T test5 = F(std::numeric_limits<T>::min() + 1);
   assert(test5 == std::numeric_limits<T>::max());
 }
-
+ 
 int main()
 {
  namespace c = sscrisk::cel;

@@ -6,7 +6,7 @@
 
 #include<cassert>
 #include<sscrisk/cel/algorithm.hpp>
-
+#include<iostream>
 constexpr bool is_less_than_2(int n)
 {
  return n < 2;
@@ -354,7 +354,21 @@ int main()
    constexpr bool test5 = is_partitioned(e, e + 8, is_less_than_2);
    assert(test5 == false);
   }
-  
+
+  // partition_point
+  {
+   constexpr auto test1 = partition_point(a, a, is_less_than_2);
+   assert(test1 == a);
+   constexpr auto test2 = partition_point(a, a + 1, is_less_than_2);
+   assert(test2 == a + 1);
+   constexpr auto test3 = partition_point(b, b + 2, is_less_than_2);
+   assert(test3 == b + 2);
+   constexpr auto test4 = partition_point(c, c + 3, is_less_than_2);
+   assert(test4 == c + 2);
+   constexpr auto test5 = partition_point(d, d + 4, is_less_than_2);
+   assert(test5 == d + 2);
+  }
+
   // is_sorted
   {
    {
