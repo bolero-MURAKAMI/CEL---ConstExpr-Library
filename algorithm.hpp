@@ -417,7 +417,7 @@ namespace detail{
 template<class Iterator, class Compare>
 constexpr Iterator is_heap_until_impl(Iterator first, Iterator last, Compare comp, std::size_t n)
 {
- return first + n == last || comp(first[n], first[n / 2]) ? first + n
+ return first + n == last || !comp(first[n], first[(n - 1) / 2]) ? first + n
   : is_heap_until_impl(first, last, comp, n + 1);
 }
 
@@ -425,8 +425,8 @@ constexpr Iterator is_heap_until_impl(Iterator first, Iterator last, Compare com
 
 template<class Iterator>
 constexpr Iterator is_heap_until(Iterator, Iterator);
-// template<class Iterator, class Compare>
-// constexpr Iterator is_heap_until(Iterator, Iterator, Compare);
+template<class Iterator, class Compare>
+constexpr Iterator is_heap_until(Iterator, Iterator, Compare);
 
 // 25.4.6.5 is_heap
 template<class Iterator>
@@ -450,7 +450,7 @@ constexpr Iterator is_heap_until(Iterator first, Iterator last)
 template<class Iterator, class Compare>
 constexpr Iterator is_heap_until(Iterator first, Iterator last, Compare comp)
 {
- return distance(first, last) < 2 ? last : detail::is_heap_until_impl(first, last, comp, 0);
+ return distance(first, last) < 2 ? last : detail::is_heap_until_impl(first, last, comp, 1);
 }
 
 // 25.4.7 Minimum and maximum

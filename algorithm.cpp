@@ -618,20 +618,22 @@ int main()
     constexpr auto test2 = is_heap_until(a, a + 1);
     assert(test2 == a + 1);
     constexpr auto test3 = is_heap_until(b, b + 2);
-    assert(test3 == b + 2);
+    assert(test3 == b + 1);
     static constexpr int array1[2] = {1, 0};
     constexpr auto test4 = is_heap_until(array1, array1 + 2);
-    assert(test4 == array1 + 1);
+    assert(test4 == array1 + 2);
     constexpr auto test5 = is_heap_until(c, c + 3);
-    assert(test5 == c + 3);
-    static constexpr int array2[3] = {0, 1, -1};
-    constexpr auto test6 = is_heap_until(array2, array2 + 3);
-    assert(test6 == array2 + 2);
+    assert(test5 == c + 1);
+    static constexpr int array2[3] = {-1, 0, 1};
+    constexpr auto test6 = is_heap_until(array2, array2 + 4);
+    assert(test6 == array2 + 1);
     static constexpr int array3[3] = {0, -1, 1};
     constexpr auto test7 = is_heap_until(array3, array3 + 3);
-    assert(test7 == array3 + 1);
+    assert(test7 == array3 + 2);
     constexpr auto test8 = is_heap_until(e, e + 8);
-    assert(test8 == e + 7);
+    assert(test8 == e + 1);
+    static constexpr int arr2[] = {10, 9, 7, 8, 5, 99, 99, 99, 99, 99};
+    assert(is_heap_until(arr2, arr2 + 10) == arr2 + 5);
    }
    {
     constexpr auto comp = less<int>();
@@ -640,20 +642,22 @@ int main()
     constexpr auto test2 = is_heap_until(a, a + 1, comp);
     assert(test2 == a + 1);
     constexpr auto test3 = is_heap_until(b, b + 2, comp);
-    assert(test3 == b + 2);
+    assert(test3 == b + 1);
     static constexpr int array1[2] = {1, 0};
     constexpr auto test4 = is_heap_until(array1, array1 + 2, comp);
-    assert(test4 == array1 + 1);
+    assert(test4 == array1 + 2);
     constexpr auto test5 = is_heap_until(c, c + 3, comp);
-    assert(test5 == c + 3);
-    static constexpr int array2[3] = {0, 1, -1};
-    constexpr auto test6 = is_heap_until(array2, array2 + 3, comp);
-    assert(test6 == array2 + 2);
+    assert(test5 == c + 1);
+    static constexpr int array2[3] = {-1, 0, 1};
+    constexpr auto test6 = is_heap_until(array2, array2 + 4, comp);
+    assert(test6 == array2 + 1);
     static constexpr int array3[3] = {0, -1, 1};
     constexpr auto test7 = is_heap_until(array3, array3 + 3, comp);
-    assert(test7 == array3 + 1);
+    assert(test7 == array3 + 2);
     constexpr auto test8 = is_heap_until(e, e + 8, comp);
-    assert(test8 == e + 7);
+    assert(test8 == e + 1);
+    static constexpr int arr2[] = {10, 9, 7, 8, 5, 99, 99, 99, 99, 99};
+    assert(is_heap_until(arr2, arr2 + 10, comp) == arr2 + 5);
    }
   }
 
@@ -664,23 +668,12 @@ int main()
     assert(test1 == true);
     constexpr bool test2 = is_heap(a, a + 1);
     assert(test2 == true);
-    constexpr bool test3 = is_heap(b, b + 2);
+    static constexpr int arr1[] = {10, 9, 7, 8, 5, 6, 3, 1, 4, 2};
+    constexpr bool test3 = is_heap(arr1, arr1 + 10);
     assert(test3 == true);
-    static constexpr int array1[2] = {1, 0};
-    constexpr bool test4 = is_heap(array1, array1 + 2);
+    static constexpr int arr2[] = {10, 9, 7, 8, 5, 99, 99, 99, 99, 99};
+    constexpr bool test4 = is_heap(arr2, arr2 + 10);
     assert(test4 == false);
-    constexpr bool test5 = is_heap(c, c + 3);
-    assert(test5 == true);
-    static constexpr int array2[3] = {0, 1, -1};
-    constexpr bool test6 = is_heap(array2, array2 + 3);
-    assert(test6 == false);
-    static constexpr int array3[3] = {0, -1, 1};
-    constexpr bool test7 = is_heap(array3, array3 + 3);
-    assert(test7 == false);
-    constexpr bool test8 = is_heap(e, e + 8);
-    assert(test8 == false);
-    constexpr bool test9 = is_heap(e, e + 7);
-    assert(test9 == true);
    }
    {
     constexpr auto comp = less<int>();
@@ -688,23 +681,12 @@ int main()
     assert(test1 == true);
     constexpr bool test2 = is_heap(a, a + 1, comp);
     assert(test2 == true);
-    constexpr bool test3 = is_heap(b, b + 2, comp);
+    static constexpr int arr1[] = {10, 9, 7, 8, 5, 6, 3, 1, 4, 2};
+    constexpr bool test3 = is_heap(arr1, arr1 + 10, comp);
     assert(test3 == true);
-    static constexpr int array1[2] = {1, 0};
-    constexpr bool test4 = is_heap(array1, array1 + 2, comp);
+    static constexpr int arr2[] = {10, 9, 7, 8, 5, 99, 99, 99, 99, 99};
+    constexpr bool test4 = is_heap(arr2, arr2 + 10, comp);
     assert(test4 == false);
-    constexpr bool test5 = is_heap(c, c + 3, comp);
-    assert(test5 == true);
-    static constexpr int array2[3] = {0, 1, -1};
-    constexpr bool test6 = is_heap(array2, array2 + 3, comp);
-    assert(test6 == false);
-    static constexpr int array3[3] = {0, -1, 1};
-    constexpr bool test7 = is_heap(array3, array3 + 3, comp);
-    assert(test7 == false);
-    constexpr bool test8 = is_heap(e, e + 8, comp);
-    assert(test8 == false);
-    constexpr bool test9 = is_heap(e, e + 7, comp);
-    assert(test9 == true);
    }
   }
 
