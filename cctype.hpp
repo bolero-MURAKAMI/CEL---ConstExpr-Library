@@ -18,6 +18,7 @@
 // Supported only ASCII.
 
 #include<cstdio>
+#include<limits>
 #include<stdexcept>
 
 namespace sscrisk{ namespace cel{
@@ -41,9 +42,9 @@ constexpr unsigned table[] = {
 
 constexpr int type(int c)
 {
- return  0x0 <= c && c <= 0x7F ? table[c]
-  : (0x80 <= c && c <= 0xFF) || c == EOF ? 0
-  : throw std::out_of_range("Out of unsigned char range [0x0, 0xFF]");
+ return 0x0 <= c && c <= 0x7F ? table[c]
+  : (0x80 <= c && c <= std::numeric_limits<unsigned char>::max()) || c == EOF ? 0
+  : throw std::out_of_range("Out of unsigned char range [0x0, std::numeric_limits<unsigned char>::max()]");
 }
 
 }
