@@ -10,6 +10,20 @@
 #include<cassert>
 #include<sscrisk/cel/cctype.hpp>
 
+template<class F>
+bool throws(F&& f)
+{
+ try
+ {
+  f();
+ }
+ catch(std::out_of_range const &)
+ {
+  return true;
+ }
+ return false;
+}
+
 int main()
 {
  namespace c = sscrisk::cel;
@@ -30,6 +44,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::isalnum(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isalnum(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isalnum(0x100);}));
  }
  {
   constexpr bool test1 = c::isalpha('A');
@@ -48,6 +65,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::isalpha(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isalpha(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isalpha(0x100);}));
  }
  {
   constexpr bool test1 = c::isblank('A');
@@ -66,6 +86,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::isblank(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isblank(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isblank(0x100);}));
  }
  {
   constexpr bool test1 = c::iscntrl('A');
@@ -84,6 +107,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::iscntrl(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::iscntrl(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::iscntrl(0x100);}));
  }
  {
   constexpr bool test1 = c::isdigit('A');
@@ -102,6 +128,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::isdigit(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isdigit(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isdigit(0x100);}));
  }
  {
   constexpr bool test1 = c::isgraph('A');
@@ -120,6 +149,9 @@ int main()
   assert(test7 == true);
   constexpr bool test8 = c::isgraph(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isgraph(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isgraph(0x100);}));
  }
  {
   constexpr bool test1 = c::islower('A');
@@ -138,6 +170,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::islower(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::islower(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::islower(0x100);}));
  }
  {
   constexpr bool test1 = c::isprint('A');
@@ -156,6 +191,9 @@ int main()
   assert(test7 == true);
   constexpr bool test8 = c::isprint(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isprint(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isprint(0x100);}));
  }
  {
   constexpr bool test1 = c::ispunct('A');
@@ -174,6 +212,9 @@ int main()
   assert(test7 == true);
   constexpr bool test8 = c::ispunct(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::ispunct(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::ispunct(0x100);}));
  }
  {
   constexpr bool test1 = c::isspace('A');
@@ -192,6 +233,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::isspace(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isspace(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isspace(0x100);}));
  }
  {
   constexpr bool test1 = c::isupper('A');
@@ -210,6 +254,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::isupper(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isupper(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isupper(0x100);}));
  }
  {
   constexpr bool test1 = c::isxdigit('A');
@@ -228,6 +275,9 @@ int main()
   assert(test7 == false);
   constexpr bool test8 = c::isxdigit(EOF);
   assert(test8 == false);
+  constexpr bool test9 = c::isxdigit(0x80);
+  assert(test9 == false);
+  assert(throws([]{c::isxdigit(0x100);}));
  }
  {
   constexpr int test1 = c::tolower('A');
@@ -246,6 +296,9 @@ int main()
   assert(test7 == ',');
   constexpr int test8 = c::tolower(EOF);
   assert(test8 == EOF);
+  constexpr int test9 = c::tolower(0x80);
+  assert(test9 == 0x80);
+  assert(throws([]{c::tolower(0x100);}));
  }
  {
   constexpr int test1 = c::toupper('A');
@@ -264,5 +317,8 @@ int main()
   assert(test7 == ',');
   constexpr int test8 = c::toupper(EOF);
   assert(test8 == EOF);
+  constexpr int test9 = c::toupper(0x80);
+  assert(test9 == 0x80);
+  assert(throws([]{c::toupper(0x100);}));
  }
 }
