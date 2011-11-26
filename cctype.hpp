@@ -17,6 +17,8 @@
 
 // Supported only ASCII.
 
+#include<cstdio>
+
 namespace sscrisk{ namespace cel{
 
 namespace detail{
@@ -44,73 +46,73 @@ constexpr int isdigit(int);
 // 7.4.1.1 The isalnum function
 constexpr int isalnum(int c)
 {
- return isalpha(c) || isdigit(c);
+ return c == EOF ? 0 : isalpha(c) || isdigit(c);
 }
 
 // 7.4.1.2 The isalpha function
 constexpr int isalpha(int c)
 {
- return detail::table[c] & detail::alpha;
+ return c == EOF ? 0 : detail::table[c] & detail::alpha;
 }
 
 // 7.4.1.3 The isblank function
 constexpr int isblank(int c)
 {
- return detail::table[c] & detail::blank;
+ return c == EOF ? 0 : detail::table[c] & detail::blank;
 }
 
 // 7.4.1.4 The iscntrl function
 constexpr int iscntrl(int c)
 {
- return detail::table[c] & detail::cntrl;
+ return c == EOF ? 0 : detail::table[c] & detail::cntrl;
 }
 
 // 7.4.1.5 The isdigit function
 constexpr int isdigit(int c)
 {
- return detail::table[c] & detail::digit;
+ return c == EOF ? 0 : detail::table[c] & detail::digit;
 }
 
 // 7.4.1.6 The isgraph function
 constexpr int isgraph(int c)
 {
- return detail::table[c] & detail::graph;
+ return c == EOF ? 0 : detail::table[c] & detail::graph;
 }
 
 // 7.4.1.7 The islower function
 constexpr int islower(int c)
 {
- return detail::table[c] & detail::lower;
+ return c == EOF ? 0 : detail::table[c] & detail::lower;
 }
 
 // 7.4.1.8 The isprint function
 constexpr int isprint(int c)
 {
- return detail::table[c] & detail::print;
+ return c == EOF ? 0 : detail::table[c] & detail::print;
 }
 
 // 7.4.1.9 The ispunct function
 constexpr int ispunct(int c)
 {
- return detail::table[c] & detail::punct;
+ return c == EOF ? 0 : detail::table[c] & detail::punct;
 }
 
 // 7.4.1.10 The isspace function
 constexpr int isspace(int c)
 {
- return detail::table[c] & detail::space;
+ return c == EOF ? 0 : detail::table[c] & detail::space;
 }
 
 // 7.4.1.11 The isupper function
 constexpr int isupper(int c)
 {
- return detail::table[c] & detail::upper;
+ return c == EOF ? 0 : detail::table[c] & detail::upper;
 }
 
 // 7.4.1.12 The isxdigit function
 constexpr int isxdigit(int c)
 {
- return detail::table[c] & detail::xdigit;
+ return c == EOF ? 0 : detail::table[c] & detail::xdigit;
 }
 
 // 7.4.2.1 The tolower function

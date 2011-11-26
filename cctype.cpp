@@ -28,6 +28,8 @@ int main()
   assert(test6 == true);
   constexpr bool test7 = c::isalnum(',');
   assert(test7 == false);
+  constexpr bool test8 = c::isalnum(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isalpha('A');
@@ -44,6 +46,8 @@ int main()
   assert(test6 == true);
   constexpr bool test7= c::isalpha(',');
   assert(test7 == false);
+  constexpr bool test8 = c::isalpha(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isblank('A');
@@ -60,6 +64,8 @@ int main()
   assert(test6 == false);
   constexpr bool test7 = c::isblank(',');
   assert(test7 == false);
+  constexpr bool test8 = c::isblank(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::iscntrl('A');
@@ -76,6 +82,8 @@ int main()
   assert(test6 == false);
   constexpr bool test7 = c::iscntrl(',');
   assert(test7 == false);
+  constexpr bool test8 = c::iscntrl(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isdigit('A');
@@ -92,6 +100,8 @@ int main()
   assert(test6 == false);
   constexpr bool test7 = c::isdigit(',');
   assert(test7 == false);
+  constexpr bool test8 = c::isdigit(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isgraph('A');
@@ -108,6 +118,8 @@ int main()
   assert(test6 == true);
   constexpr bool test7 = c::isgraph(',');
   assert(test7 == true);
+  constexpr bool test8 = c::isgraph(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::islower('A');
@@ -124,6 +136,8 @@ int main()
   assert(test6 == true);
   constexpr bool test7 = c::islower(',');
   assert(test7 == false);
+  constexpr bool test8 = c::islower(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isprint('A');
@@ -140,6 +154,8 @@ int main()
   assert(test6 == true);
   constexpr bool test7 = c::isprint(',');
   assert(test7 == true);
+  constexpr bool test8 = c::isprint(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::ispunct('A');
@@ -156,6 +172,8 @@ int main()
   assert(test6 == false);
   constexpr bool test7 = c::ispunct(',');
   assert(test7 == true);
+  constexpr bool test8 = c::ispunct(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isspace('A');
@@ -172,6 +190,8 @@ int main()
   assert(test6 == false);
   constexpr bool test7 = c::isspace(',');
   assert(test7 == false);
+  constexpr bool test8 = c::isspace(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isupper('A');
@@ -188,6 +208,8 @@ int main()
   assert(test6 == false);
   constexpr bool test7 = c::isupper(',');
   assert(test7 == false);
+  constexpr bool test8 = c::isupper(EOF);
+  assert(test8 == false);
  }
  {
   constexpr bool test1 = c::isxdigit('A');
@@ -204,37 +226,43 @@ int main()
   assert(test6 == true);
   constexpr bool test7 = c::isxdigit(',');
   assert(test7 == false);
+  constexpr bool test8 = c::isxdigit(EOF);
+  assert(test8 == false);
  }
  {
-  constexpr char test1 = c::tolower('A');
+  constexpr int test1 = c::tolower('A');
   assert(test1 == 'a');
-  constexpr char test2 = c::tolower('a');
+  constexpr int test2 = c::tolower('a');
   assert(test2 == 'a');
-  constexpr char test3 = c::tolower('0');
+  constexpr int test3 = c::tolower('0');
   assert(test3 == '0');
-  constexpr char test4 = c::tolower(' ');
+  constexpr int test4 = c::tolower(' ');
   assert(test4 == ' ');
-  constexpr char test5 = c::tolower('\a');
+  constexpr int test5 = c::tolower('\a');
   assert(test5 == '\a');
-  constexpr char test6 = c::tolower('f');
+  constexpr int test6 = c::tolower('f');
   assert(test6 == 'f');
-  constexpr char test7 = c::tolower(',');
+  constexpr int test7 = c::tolower(',');
   assert(test7 == ',');
+  constexpr int test8 = c::tolower(EOF);
+  assert(test8 == EOF);
  }
  {
-  constexpr char test1 = c::toupper('A');
+  constexpr int test1 = c::toupper('A');
   assert(test1 == 'A');
-  constexpr char test2 = c::toupper('a');
+  constexpr int test2 = c::toupper('a');
   assert(test2 == 'A');
-  constexpr char test3 = c::toupper('0');
+  constexpr int test3 = c::toupper('0');
   assert(test3 == '0');
-  constexpr char test4 = c::toupper(' ');
+  constexpr int test4 = c::toupper(' ');
   assert(test4 == ' ');
-  constexpr char test5 = c::toupper('\a');
+  constexpr int test5 = c::toupper('\a');
   assert(test5 == '\a');
-  constexpr char test6 = c::toupper('f');
+  constexpr int test6 = c::toupper('f');
   assert(test6 == 'F');
-  constexpr char test7 = c::toupper(',');
+  constexpr int test7 = c::toupper(',');
   assert(test7 == ',');
+  constexpr int test8 = c::toupper(EOF);
+  assert(test8 == EOF);
  }
 }
